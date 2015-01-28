@@ -1,4 +1,4 @@
-﻿namespace Rocks.SimpleInjector.Tests.NonThreadSafeCheck.TestModels
+﻿namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck.TestModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     internal class TransientService

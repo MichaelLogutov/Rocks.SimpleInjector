@@ -1,4 +1,4 @@
-﻿namespace Rocks.SimpleInjector.Tests.NonThreadSafeCheck.TestModels
+﻿namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck.TestModels
 {
     internal class SutWithTransientField
     {

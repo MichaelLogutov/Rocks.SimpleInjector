@@ -66,24 +66,24 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="NonThreadSafeCheck\GetNotThreadSafeMembersTests.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\NotRegisteredService.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SingletonService.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithEvent.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithMutablePropertyWithoutSet.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithNonReadonlyField.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithNotMutableReferenceReadonlyFields.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithNotRegisteredField.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithPropertyWithSet.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithReadonlyMutableField.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithReadonlyValueTypeField.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithSingletonAndTransientField.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithSingletonField.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithTransientField.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithTransientFieldFromBase.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithTransientProperty.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\SutWithValueTypePropertyWithoutSet.cs" />
-    <Compile Include="NonThreadSafeCheck\TestModels\TransientService.cs" />
+    <Compile Include="NotThreadSafeCheck\GetNotThreadSafeMembersTests.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\NotRegisteredService.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SingletonService.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithEvent.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithMutablePropertyWithoutSet.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithNonReadonlyField.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithNotMutableReferenceReadonlyFields.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithNotRegisteredField.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithPropertyWithSet.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithReadonlyMutableField.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithReadonlyValueTypeField.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithSingletonAndTransientField.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithSingletonField.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithTransientField.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithTransientFieldFromBase.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithTransientProperty.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithValueTypePropertyWithoutSet.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\TransientService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

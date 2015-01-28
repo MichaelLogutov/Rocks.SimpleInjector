@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 
-namespace Rocks.SimpleInjector.NonThreadSafeCheck
+namespace Rocks.SimpleInjector.NotThreadSafeCheck
 {
-    public class NonThreadMemberInfo
+    public class NotThreadMemberInfo
     {
         /// <summary>
         ///     A member that is potentially not thread safe.

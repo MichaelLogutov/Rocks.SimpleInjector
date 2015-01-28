@@ -4,7 +4,7 @@ using Rocks.Helpers;
 using Rocks.SimpleInjector.Attributes;
 using SimpleInjector;
 
-namespace Rocks.SimpleInjector.NonThreadSafeCheck
+namespace Rocks.SimpleInjector.NotThreadSafeCheck
 {
     public class SimpleInjectorRegistrationInfo
     {
@@ -26,7 +26,7 @@ namespace Rocks.SimpleInjector.NonThreadSafeCheck
         /// <summary>
         ///     A list of potential non thread members.
         /// </summary>
-        public IList<NonThreadMemberInfo> NotThreadSafeMembers { get; set; }
+        public IList<NotThreadMemberInfo> NotThreadSafeMembers { get; set; }
 
         /// <summary>
         ///     True if <see cref="ImplementationType" /> has <see cref="SingletonAttribute" />.

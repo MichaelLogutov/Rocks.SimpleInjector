@@ -3,11 +3,11 @@ using System.Reflection;
 using FluentAssertions;
 using FluentAssertions.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rocks.SimpleInjector.NonThreadSafeCheck;
-using Rocks.SimpleInjector.Tests.NonThreadSafeCheck.TestModels;
+using Rocks.SimpleInjector.NotThreadSafeCheck;
+using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.TestModels;
 using SimpleInjector;
 
-namespace Rocks.SimpleInjector.Tests.NonThreadSafeCheck
+namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 {
     [TestClass]
     public class GetNotThreadSafeMembersTests
@@ -239,7 +239,7 @@ namespace Rocks.SimpleInjector.Tests.NonThreadSafeCheck
         }
 
 
-        private static void ShouldHaveViolation<TMember> (IList<NonThreadMemberInfo> result,
+        private static void ShouldHaveViolation<TMember> (IList<NotThreadMemberInfo> result,
                                                           ThreadSafetyViolationType violationType,
                                                           string memberName = "member",
                                                           int? expectedCount = null)

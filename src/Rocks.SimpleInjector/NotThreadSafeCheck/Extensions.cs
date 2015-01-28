@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using Rocks.SimpleInjector.Attributes;
 using SimpleInjector;
 
-namespace Rocks.SimpleInjector.NonThreadSafeCheck
+namespace Rocks.SimpleInjector.NotThreadSafeCheck
 {
     public static class Extensions
     {
@@ -68,7 +68,7 @@ namespace Rocks.SimpleInjector.NonThreadSafeCheck
         ///     Gets a list of potential non thread members of the type.
         /// </summary>
         [NotNull]
-        public static List<NonThreadMemberInfo> GetNotThreadSafeMembers ([NotNull] this Container container, [NotNull] Type type)
+        public static List<NotThreadMemberInfo> GetNotThreadSafeMembers ([NotNull] this Container container, [NotNull] Type type)
         {
             if (container == null)
                 throw new ArgumentNullException ("container");
@@ -78,7 +78,7 @@ namespace Rocks.SimpleInjector.NonThreadSafeCheck
 
             var registrations = container.GetCurrentRegistrations ();
 
-            var result = new List<NonThreadMemberInfo> ();
+            var result = new List<NotThreadMemberInfo> ();
 
             if (IsNotMutableType (type))
                 return result;
@@ -90,7 +90,7 @@ namespace Rocks.SimpleInjector.NonThreadSafeCheck
 
                 if (!field.IsInitOnly)
                 {
-                    result.Add (new NonThreadMemberInfo { Member = field, ViolationType = ThreadSafetyViolationType.NonReadonlyMember });
+                    result.Add (new NotThreadMemberInfo { Member = field, ViolationType = ThreadSafetyViolationType.NonReadonlyMember });
                     continue;
                 }
 
@@ -101,14 +101,14 @@ namespace Rocks.SimpleInjector.NonThreadSafeCheck
             {
                 if (property.CanWrite)
                 {
-                    result.Add (new NonThreadMemberInfo { Member = property, ViolationType = ThreadSafetyViolationType.NonReadonlyMember });
+                    result.Add (new NotThreadMemberInfo { Member = property, ViolationType = ThreadSafetyViolationType.NonReadonlyMember });
                     continue;
                 }
 
                 CheckMember (property, property.PropertyType, registrations, result);
             }
 
-            result.AddRange (GetAllEvents (type).Select (x => new NonThreadMemberInfo
+            result.AddRange (GetAllEvents (type).Select (x => new NotThreadMemberInfo
                                                               {
                                                                   Member = x,
                                                                   ViolationType = ThreadSafetyViolationType.EventFound
@@ -124,15 +124,15 @@ namespace Rocks.SimpleInjector.NonThreadSafeCheck
         private static void CheckMember (MemberInfo member,
                                          Type memberType,
                                          IList<InstanceProducer> registrations,
-                                         ICollection<NonThreadMemberInfo> result)
+                                         ICollection<NotThreadMemberInfo> result)
         {
             if (IsNotMutableType (memberType) || HasSingletonRegistration (registrations, memberType))
                 return;
 
             if (HasNotSingletonRegistration (registrations, memberType))
-                result.Add (new NonThreadMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.NonSingletonRegistration });
+                result.Add (new NotThreadMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.NonSingletonRegistration });
             else
-                result.Add (new NonThreadMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.MutableReadonlyMember });
+                result.Add (new NotThreadMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.MutableReadonlyMember });
         }
 
 
