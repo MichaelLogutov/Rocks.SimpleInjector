@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\NotMutableAttribute.cs" />
     <Compile Include="Attributes\NotSingletonAttribute.cs" />
     <Compile Include="Attributes\SingletonAttribute.cs" />
     <Compile Include="AutoRegistrationExtensions.cs" />

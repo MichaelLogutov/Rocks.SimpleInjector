@@ -69,20 +69,26 @@
     <Compile Include="NotThreadSafeCheck\GetNotThreadSafeMembersTests.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\NotRegisteredService.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SingletonService.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceReadonlyMembers.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceReadonlyMembers2.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithEvent.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithMutablePropertyWithoutSet.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithNonReadonlyField.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithNotMutableReferenceReadonlyFields.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithNotRegisteredField.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithPropertyWithSet.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithMutableMembersWithNotMutableAttribute.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithReadonlyMutableField.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithReadonlyValueTypeField.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithSelfReferenceReadonlyMembers.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithSingletonAndTransientField.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithSingletonField.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithThreadSafeReadonlyReferenceMembers.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithTransientField.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithTransientFieldFromBase.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithTransientProperty.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithValueTypePropertyWithoutSet.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\ThreadSafeService.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\TransientService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

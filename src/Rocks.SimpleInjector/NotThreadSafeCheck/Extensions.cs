@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -29,6 +30,9 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
                                                    };
 
         #endregion
+
+        private static readonly ConcurrentDictionary<Type, List<NotThreadMemberInfo>> NotThreadSafeMembersCache =
+            new ConcurrentDictionary<Type, List<NotThreadMemberInfo>> ();
 
         #region Static methods
 
@@ -76,16 +80,39 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
             if (type == null)
                 throw new ArgumentNullException ("type");
 
-            var registrations = container.GetCurrentRegistrations ();
+            if (IsNotMutableType (type))
+                return new List<NotThreadMemberInfo> ();
 
+            var result = NotThreadSafeMembersCache.GetOrAdd (type, t => GetNotThreadSafeMembersNotCached (container, t));
+
+            return result;
+        }
+
+
+        /// <summary>
+        ///     Clears internal cache of checked thread-safe types.
+        /// </summary>
+        public static void ClearNotThreadSafeMembersCache ()
+        {
+            NotThreadSafeMembersCache.Clear ();
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private static List<NotThreadMemberInfo> GetNotThreadSafeMembersNotCached ([NotNull] Container container, [NotNull] Type type)
+        {
             var result = new List<NotThreadMemberInfo> ();
 
-            if (IsNotMutableType (type))
-                return result;
+            var events = GetAllEvents (type);
+            var registrations = container.GetCurrentRegistrations ();
 
             foreach (var field in GetAllFields (type))
             {
-                if (field.Name.EndsWith ("__BackingField", StringComparison.OrdinalIgnoreCase))
+                if (field.Name.EndsWith ("__BackingField", StringComparison.OrdinalIgnoreCase) ||
+                    NotMutableAttribute.ExsitsOn (field) ||
+                    events.Any (x => x.Name.Equals (field.Name, StringComparison.Ordinal)))
                     continue;
 
                 if (!field.IsInitOnly)
@@ -99,6 +126,9 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
             foreach (var property in GetAllProperties (type))
             {
+                if (NotMutableAttribute.ExsitsOn (property))
+                    continue;
+
                 if (property.CanWrite)
                 {
                     result.Add (new NotThreadMemberInfo { Member = property, ViolationType = ThreadSafetyViolationType.NonReadonlyMember });
@@ -108,18 +138,17 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
                 CheckMember (property, property.PropertyType, registrations, result);
             }
 
-            result.AddRange (GetAllEvents (type).Select (x => new NotThreadMemberInfo
-                                                              {
-                                                                  Member = x,
-                                                                  ViolationType = ThreadSafetyViolationType.EventFound
-                                                              }));
+            result.AddRange (events
+                                 .Where (x => !NotMutableAttribute.ExsitsOn (x))
+                                 .Select (x => new NotThreadMemberInfo
+                                               {
+                                                   Member = x,
+                                                   ViolationType = ThreadSafetyViolationType.EventFound
+                                               }));
 
             return result;
         }
 
-        #endregion
-
-        #region Private methods
 
         private static void CheckMember (MemberInfo member,
                                          Type memberType,

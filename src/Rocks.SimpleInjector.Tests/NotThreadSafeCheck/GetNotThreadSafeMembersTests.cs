@@ -224,6 +224,70 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             result.Should ().BeEmpty ();
         }
 
+
+        [TestMethod]
+        public void WithMutableMembersWithNotMutableAttribute_ReturnsNothing ()
+        {
+            // arrange
+            var container = CreateContainer ();
+
+
+            // act
+            var result = container.GetNotThreadSafeMembers (typeof (SutWithMutableMembersWithNotMutableAttribute));
+
+
+            // assert
+            result.Should ().BeEmpty ();
+        }
+
+
+        [TestMethod]
+        public void WithThreadSafeReadonlyReferenceMembers_ReturnsNothing ()
+        {
+            // arrange
+            var container = CreateContainer ();
+
+
+            // act
+            var result = container.GetNotThreadSafeMembers (typeof (SutWithThreadSafeReadonlyReferenceMembers));
+
+
+            // assert
+            result.Should ().BeEmpty ();
+        }
+
+
+        [TestMethod]
+        public void WithSelfReferenceReadonlyMembers_ReturnsNothing ()
+        {
+            // arrange
+            var container = CreateContainer ();
+
+
+            // act
+            var result = container.GetNotThreadSafeMembers (typeof (SutWithSelfReferenceReadonlyMembers));
+
+
+            // assert
+            result.Should ().BeEmpty ();
+        }
+
+
+        [TestMethod]
+        public void WithCyclicReferenceReadonlyMembers_ReturnsNothing ()
+        {
+            // arrange
+            var container = CreateContainer ();
+
+
+            // act
+            var result = container.GetNotThreadSafeMembers (typeof (SutWithCyclicReferenceReadonlyMembers));
+
+
+            // assert
+            result.Should ().BeEmpty ();
+        }
+
         #endregion
 
         #region Private methods
