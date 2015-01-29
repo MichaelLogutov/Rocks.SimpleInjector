@@ -4,13 +4,14 @@ using FluentAssertions;
 using FluentAssertions.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rocks.SimpleInjector.NotThreadSafeCheck;
+using Rocks.SimpleInjector.NotThreadSafeCheck.Models;
 using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.TestModels;
 using SimpleInjector;
 
 namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 {
     [TestClass]
-    public class GetNotThreadSafeMembersTests
+    public class ThreadSafetyCheckerTests
     {
         #region Public methods
 
@@ -18,11 +19,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithTransientField_ReturnsIt ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithTransientField));
+            var result = sut.Check (typeof (SutWithTransientField));
 
 
             // assert
@@ -34,11 +35,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithTransientFieldFromBase_ReturnsIt ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithTransientFieldFromBase));
+            var result = sut.Check (typeof (SutWithTransientFieldFromBase));
 
 
             // assert
@@ -50,11 +51,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithSingletonField_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithSingletonField));
+            var result = sut.Check (typeof (SutWithSingletonField));
 
 
             // assert
@@ -66,11 +67,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithSingletonAndTransientField_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithSingletonAndTransientField));
+            var result = sut.Check (typeof (SutWithSingletonAndTransientField));
 
 
             // assert
@@ -82,11 +83,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithEvent_ReturnsIt ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithEvent));
+            var result = sut.Check (typeof (SutWithEvent));
 
 
             // assert
@@ -98,11 +99,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithTransientAutoProperty_ReturnsIt ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithTransientProperty));
+            var result = sut.Check (typeof (SutWithTransientProperty));
 
 
             // assert
@@ -117,11 +118,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithNonReadonlyField_ReturnsIt ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithNonReadonlyField));
+            var result = sut.Check (typeof (SutWithNonReadonlyField));
 
 
             // assert
@@ -133,11 +134,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithReadonlyMutableField_ReturnsIt ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithReadonlyMutableField));
+            var result = sut.Check (typeof (SutWithReadonlyMutableField));
 
 
             // assert
@@ -149,11 +150,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithReadonlyValueTypeField_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithReadonlyValueTypeField));
+            var result = sut.Check (typeof (SutWithReadonlyValueTypeField));
 
 
             // assert
@@ -165,11 +166,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithPropertyWithSet_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithPropertyWithSet));
+            var result = sut.Check (typeof (SutWithPropertyWithSet));
 
 
             // assert
@@ -181,11 +182,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithValueTypePropertyWithoutSet_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithValueTypePropertyWithoutSet));
+            var result = sut.Check (typeof (SutWithValueTypePropertyWithoutSet));
 
 
             // assert
@@ -197,11 +198,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithMutablePropertyWithoutSet_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithMutablePropertyWithoutSet));
+            var result = sut.Check (typeof (SutWithMutablePropertyWithoutSet));
 
 
             // assert
@@ -213,11 +214,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithNotMutableReferenceReadonlyFields_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithNotMutableReferenceReadonlyFields));
+            var result = sut.Check (typeof (SutWithNotMutableReferenceReadonlyFields));
 
 
             // assert
@@ -229,11 +230,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithMutableMembersWithNotMutableAttribute_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithMutableMembersWithNotMutableAttribute));
+            var result = sut.Check (typeof (SutWithMutableMembersWithNotMutableAttribute));
 
 
             // assert
@@ -245,11 +246,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithThreadSafeReadonlyReferenceMembers_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithThreadSafeReadonlyReferenceMembers));
+            var result = sut.Check (typeof (SutWithThreadSafeReadonlyReferenceMembers));
 
 
             // assert
@@ -261,11 +262,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithSelfReferenceReadonlyMembers_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithSelfReferenceReadonlyMembers));
+            var result = sut.Check (typeof (SutWithSelfReferenceReadonlyMembers));
 
 
             // assert
@@ -277,11 +278,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithCyclicReferenceReadonlyMembers_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithCyclicReferenceReadonlyMembers));
+            var result = sut.Check (typeof (SutWithCyclicReferenceReadonlyMembers));
 
 
             // assert
@@ -293,11 +294,11 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         public void WithCyclicReferenceAndNotThreadSafeMembers_ReturnsNothing ()
         {
             // arrange
-            var container = CreateContainer ();
+            var sut = CreateSut ();
 
 
             // act
-            var result = container.GetNotThreadSafeMembers (typeof (SutWithCyclicReferenceAndNotThreadSafeMembers));
+            var result = sut.Check (typeof (SutWithCyclicReferenceAndNotThreadSafeMembers));
 
 
             // assert
@@ -308,14 +309,16 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
         #region Private methods
 
-        private static Container CreateContainer ()
+        private static ThreadSafetyChecker CreateSut ()
         {
             var container = new Container ();
 
             container.Register<TransientService> (Lifestyle.Transient);
             container.RegisterSingle<SingletonService> ();
 
-            return container;
+            var sut = new ThreadSafetyChecker (container);
+
+            return sut;
         }
 
 

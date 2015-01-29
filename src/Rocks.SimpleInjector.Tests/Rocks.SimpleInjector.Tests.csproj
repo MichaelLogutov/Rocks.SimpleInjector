@@ -66,7 +66,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="NotThreadSafeCheck\GetNotThreadSafeMembersTests.cs" />
+    <Compile Include="NotThreadSafeCheck\ThreadSafetyCheckerTests.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\NotRegisteredService.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SingletonService.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceAndNotThreadSafeMembers.cs" />

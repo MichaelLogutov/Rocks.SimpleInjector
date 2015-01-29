@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Rocks.SimpleInjector.NotThreadSafeCheck
+namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
 {
     public class NotThreadSafeMemberInfo
     {

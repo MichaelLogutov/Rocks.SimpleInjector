@@ -4,7 +4,7 @@ using Rocks.Helpers;
 using Rocks.SimpleInjector.Attributes;
 using SimpleInjector;
 
-namespace Rocks.SimpleInjector.NotThreadSafeCheck
+namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
 {
     public class SimpleInjectorRegistrationInfo
     {

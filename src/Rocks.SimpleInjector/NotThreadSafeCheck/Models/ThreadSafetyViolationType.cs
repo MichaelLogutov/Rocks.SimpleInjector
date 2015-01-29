@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rocks.SimpleInjector.NotThreadSafeCheck
+namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
 {
     /// <summary>
     ///     A type of violation of thread safety.

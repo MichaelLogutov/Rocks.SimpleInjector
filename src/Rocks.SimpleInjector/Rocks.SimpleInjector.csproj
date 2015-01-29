@@ -61,10 +61,12 @@
     <Compile Include="Attributes\NotSingletonAttribute.cs" />
     <Compile Include="Attributes\SingletonAttribute.cs" />
     <Compile Include="AutoRegistrationExtensions.cs" />
-    <Compile Include="NotThreadSafeCheck\NotThreadSafeMemberInfo.cs" />
+    <Compile Include="NotThreadSafeCheck\Models\NotThreadSafeMemberInfo.cs" />
     <Compile Include="NotThreadSafeCheck\Extensions.cs" />
-    <Compile Include="NotThreadSafeCheck\SimpleInjectorRegistrationInfo.cs" />
-    <Compile Include="NotThreadSafeCheck\ThreadSafetyViolationType.cs" />
+    <Compile Include="NotThreadSafeCheck\Models\SimpleInjectorRegistrationInfo.cs" />
+    <Compile Include="NotThreadSafeCheck\ThreadSafetyChecker.cs" />
+    <Compile Include="NotThreadSafeCheck\Models\ThreadSafetyViolationType.cs" />
+    <Compile Include="NotThreadSafeCheck\Models\TypeThreadSafety.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\JetBrains.Annotations.cs" />
   </ItemGroup>
