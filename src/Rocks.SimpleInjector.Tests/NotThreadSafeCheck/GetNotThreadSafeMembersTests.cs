@@ -288,6 +288,22 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             result.Should ().BeEmpty ();
         }
 
+
+        [TestMethod]
+        public void WithCyclicReferenceAndNotThreadSafeMembers_ReturnsNothing ()
+        {
+            // arrange
+            var container = CreateContainer ();
+
+
+            // act
+            var result = container.GetNotThreadSafeMembers (typeof (SutWithCyclicReferenceAndNotThreadSafeMembers));
+
+
+            // assert
+            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
+        }
+
         #endregion
 
         #region Private methods
@@ -303,7 +319,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        private static void ShouldHaveViolation<TMember> (IList<NotThreadMemberInfo> result,
+        private static void ShouldHaveViolation<TMember> (IList<NotThreadSafeMemberInfo> result,
                                                           ThreadSafetyViolationType violationType,
                                                           string memberName = "member",
                                                           int? expectedCount = null)

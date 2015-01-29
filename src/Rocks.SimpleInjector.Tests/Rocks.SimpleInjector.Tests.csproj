@@ -69,6 +69,8 @@
     <Compile Include="NotThreadSafeCheck\GetNotThreadSafeMembersTests.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\NotRegisteredService.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SingletonService.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceAndNotThreadSafeMembers.cs" />
+    <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceAndNotThreadSafeMembers2.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceReadonlyMembers.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceReadonlyMembers2.cs" />
     <Compile Include="NotThreadSafeCheck\TestModels\SutWithEvent.cs" />

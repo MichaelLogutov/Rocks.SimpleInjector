@@ -61,7 +61,7 @@
     <Compile Include="Attributes\NotSingletonAttribute.cs" />
     <Compile Include="Attributes\SingletonAttribute.cs" />
     <Compile Include="AutoRegistrationExtensions.cs" />
-    <Compile Include="NotThreadSafeCheck\NotThreadMemberInfo.cs" />
+    <Compile Include="NotThreadSafeCheck\NotThreadSafeMemberInfo.cs" />
     <Compile Include="NotThreadSafeCheck\Extensions.cs" />
     <Compile Include="NotThreadSafeCheck\SimpleInjectorRegistrationInfo.cs" />
     <Compile Include="NotThreadSafeCheck\ThreadSafetyViolationType.cs" />

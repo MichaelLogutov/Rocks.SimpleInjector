@@ -31,8 +31,8 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
         #endregion
 
-        private static readonly ConcurrentDictionary<Type, List<NotThreadMemberInfo>> NotThreadSafeMembersCache =
-            new ConcurrentDictionary<Type, List<NotThreadMemberInfo>> ();
+        private static readonly ConcurrentDictionary<Type, List<NotThreadSafeMemberInfo>> NotThreadSafeMembersCache =
+            new ConcurrentDictionary<Type, List<NotThreadSafeMemberInfo>> ();
 
         #region Static methods
 
@@ -72,7 +72,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         ///     Gets a list of potential non thread members of the type.
         /// </summary>
         [NotNull]
-        public static List<NotThreadMemberInfo> GetNotThreadSafeMembers ([NotNull] this Container container, [NotNull] Type type)
+        public static List<NotThreadSafeMemberInfo> GetNotThreadSafeMembers ([NotNull] this Container container, [NotNull] Type type)
         {
             if (container == null)
                 throw new ArgumentNullException ("container");
@@ -81,7 +81,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
                 throw new ArgumentNullException ("type");
 
             if (IsNotMutableType (type))
-                return new List<NotThreadMemberInfo> ();
+                return new List<NotThreadSafeMemberInfo> ();
 
             var result = NotThreadSafeMembersCache.GetOrAdd (type, t => GetNotThreadSafeMembersNotCached (container, t));
 
@@ -101,9 +101,9 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
         #region Private methods
 
-        private static List<NotThreadMemberInfo> GetNotThreadSafeMembersNotCached ([NotNull] Container container, [NotNull] Type type)
+        private static List<NotThreadSafeMemberInfo> GetNotThreadSafeMembersNotCached ([NotNull] Container container, [NotNull] Type type)
         {
-            var result = new List<NotThreadMemberInfo> ();
+            var result = new List<NotThreadSafeMemberInfo> ();
 
             var events = GetAllEvents (type);
             var registrations = container.GetCurrentRegistrations ();
@@ -117,7 +117,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
                 if (!field.IsInitOnly)
                 {
-                    result.Add (new NotThreadMemberInfo { Member = field, ViolationType = ThreadSafetyViolationType.NonReadonlyMember });
+                    result.Add (new NotThreadSafeMemberInfo { Member = field, ViolationType = ThreadSafetyViolationType.NonReadonlyMember });
                     continue;
                 }
 
@@ -131,7 +131,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
                 if (property.CanWrite)
                 {
-                    result.Add (new NotThreadMemberInfo { Member = property, ViolationType = ThreadSafetyViolationType.NonReadonlyMember });
+                    result.Add (new NotThreadSafeMemberInfo { Member = property, ViolationType = ThreadSafetyViolationType.NonReadonlyMember });
                     continue;
                 }
 
@@ -140,7 +140,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
             result.AddRange (events
                                  .Where (x => !NotMutableAttribute.ExsitsOn (x))
-                                 .Select (x => new NotThreadMemberInfo
+                                 .Select (x => new NotThreadSafeMemberInfo
                                                {
                                                    Member = x,
                                                    ViolationType = ThreadSafetyViolationType.EventFound
@@ -153,15 +153,15 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         private static void CheckMember (MemberInfo member,
                                          Type memberType,
                                          IList<InstanceProducer> registrations,
-                                         ICollection<NotThreadMemberInfo> result)
+                                         ICollection<NotThreadSafeMemberInfo> result)
         {
             if (IsNotMutableType (memberType) || HasSingletonRegistration (registrations, memberType))
                 return;
 
             if (HasNotSingletonRegistration (registrations, memberType))
-                result.Add (new NotThreadMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.NonSingletonRegistration });
+                result.Add (new NotThreadSafeMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.NonSingletonRegistration });
             else
-                result.Add (new NotThreadMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.MutableReadonlyMember });
+                result.Add (new NotThreadSafeMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.MutableReadonlyMember });
         }
 
 

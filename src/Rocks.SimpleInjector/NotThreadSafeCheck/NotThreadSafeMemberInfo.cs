@@ -2,7 +2,7 @@
 
 namespace Rocks.SimpleInjector.NotThreadSafeCheck
 {
-    public class NotThreadMemberInfo
+    public class NotThreadSafeMemberInfo
     {
         /// <summary>
         ///     A member that is potentially not thread safe.

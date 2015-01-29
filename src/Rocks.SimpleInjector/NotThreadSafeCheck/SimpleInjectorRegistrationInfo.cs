@@ -26,7 +26,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         /// <summary>
         ///     A list of potential non thread members.
         /// </summary>
-        public IList<NotThreadMemberInfo> NotThreadSafeMembers { get; set; }
+        public IList<NotThreadSafeMemberInfo> NotThreadSafeMembers { get; set; }
 
         /// <summary>
         ///     True if <see cref="ImplementationType" /> has <see cref="SingletonAttribute" />.
