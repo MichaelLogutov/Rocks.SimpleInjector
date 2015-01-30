@@ -2,8 +2,18 @@
 
 namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
 {
-    public class NotThreadSafeMemberInfo
+    public sealed class NotThreadSafeMemberInfo
     {
+        #region Constants
+
+        /// <summary>
+        ///     Represents a result of checking the type when all it's members are thread safe but
+        ///     there are some that lead to cyclic reference checking.
+        /// </summary>
+        public static readonly NotThreadSafeMemberInfo PotentiallySafe = new NotThreadSafeMemberInfo ();
+
+        #endregion
+
         #region Private fields
 
         private readonly MemberInfo member;
@@ -13,9 +23,11 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
 
         #region Construct
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
-        /// </summary>
+        private NotThreadSafeMemberInfo ()
+        {
+        }
+
+
         public NotThreadSafeMemberInfo (MemberInfo member, ThreadSafetyViolationType violationType)
         {
             this.member = member;

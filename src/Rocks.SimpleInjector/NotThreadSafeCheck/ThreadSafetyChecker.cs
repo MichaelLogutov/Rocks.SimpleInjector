@@ -28,7 +28,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
     {
         #region Private fields
 
-        protected readonly Dictionary<Type, IReadOnlyList<NotThreadSafeMemberInfo>> cache;
+        protected readonly Dictionary<Type, ThreadSafetyCheckResult> cache;
         protected readonly InstanceProducer[] registrations;
 
         #endregion
@@ -44,7 +44,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
                 throw new ArgumentNullException ("container");
 
             this.registrations = container.GetCurrentRegistrations ();
-            this.cache = new Dictionary<Type, IReadOnlyList<NotThreadSafeMemberInfo>> ();
+            this.cache = new Dictionary<Type, ThreadSafetyCheckResult> ();
 
             this.NotMutableTypes = new List<Type>
                                    {
@@ -84,18 +84,21 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
             if (this.IsNotMutableType (type))
                 return new NotThreadSafeMemberInfo[0];
 
-            IReadOnlyList<NotThreadSafeMemberInfo> result;
-            if (!this.cache.TryGetValue (type, out result))
-            {
-                // mark that we start to analyze the type 
-                // to prevent recursion stack overflow
-                this.cache[type] = null;
+            //IReadOnlyList<NotThreadSafeMemberInfo> result;
+            //if (!this.cache.TryGetValue (type, out result))
+            //{
+            //    // mark that we start to analyze the type 
+            //    // to prevent recursion stack overflow
+            //    this.cache[type] = null;
 
-                result = this.CheckInternal (type);
-                this.cache[type] = result;
-            }
+            //    result = this.CheckInternal (type);
+            //    this.cache[type] = result;
+            //}
 
-            return result;
+            var result = this.CheckInternal (type);
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            return result.NotThreadSafeMembers.AsReadOnlyList ();
         }
 
 
@@ -129,24 +132,38 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
         protected virtual ThreadSafetyCheckResult CheckInternal ([NotNull] Type type)
         {
-            var result = new List<NotThreadSafeMemberInfo> ();
+            ThreadSafetyCheckResult result;
+            if (!this.cache.TryGetValue (type, out result))
+            {
+                // mark as "checking started" to prevent infinite recursion
+                this.cache[type] = null;
 
-            var events = this.GetAllEvents (type);
+                result = new ThreadSafetyCheckResult ();
 
-            result.AddRange (this.GetAllFields (type)
-                                 .Where (field => !events.Any (x => x.Name.Equals (field.Name, StringComparison.Ordinal)))
-                                 .Select (this.CheckField)
-                                 .SkipNull ());
+                var events = this.GetAllEvents (type);
 
-            result.AddRange (this.GetAllProperties (type)
-                                 .Select (this.CheckProperty)
-                                 .SkipNull ());
+                foreach (var not_thread_safe_member in this.GetAllFields (type)
+                                                           .Where (field => !events.Any (x => x.Name.Equals (field.Name, StringComparison.Ordinal)))
+                                                           .Select (this.CheckField)
+                                                           .Concat (this.GetAllProperties (type).Select (this.CheckProperty))
+                                                           .Concat (events.Select (this.CheckEvent))
+                                                           .SkipNull ())
+                {
+                    if (ReferenceEquals (not_thread_safe_member, NotThreadSafeMemberInfo.PotentiallySafe))
+                        result.NotFullyChecked = true;
+                    else
+                        result.NotThreadSafeMembers.Add (not_thread_safe_member);
+                }
 
-            result.AddRange (this.GetAllEvents (type)
-                                 .Select (this.CheckEvent)
-                                 .SkipNull ());
+                this.cache[type] = result;
+            }
+            else if (result == null)
+            {
+                // cyclic reference checking
+                return new ThreadSafetyCheckResult { NotFullyChecked = true };
+            }
 
-            return result.AsReadOnly ();
+            return result;
         }
 
 
@@ -202,9 +219,15 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
             if (this.HasNotSingletonRegistration (memberType))
                 return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.NonSingletonRegistration);
 
-            //this.Check (memberType);
+            var check_result = this.CheckInternal (memberType);
+            
+            if (!check_result.NotThreadSafeMembers.IsNullOrEmpty ())
+                return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.MutableReadonlyMember);
 
-            return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.MutableReadonlyMember);
+            if (check_result.NotFullyChecked)
+                return NotThreadSafeMemberInfo.PotentiallySafe;
+
+            return null;
         }
 
 

@@ -6,7 +6,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
     /// <summary>
     ///     The result of type thread safety checking.
     /// </summary>
-    internal class ThreadSafetyCheckResult
+    public class ThreadSafetyCheckResult
     {
         /// <summary>
         ///     A list of potentially not thread safe members.

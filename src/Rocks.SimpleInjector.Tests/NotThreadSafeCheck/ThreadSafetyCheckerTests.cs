@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using FluentAssertions.Common;
+using System.Linq;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rocks.SimpleInjector.NotThreadSafeCheck;
 using Rocks.SimpleInjector.NotThreadSafeCheck.Models;
@@ -59,7 +61,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
             // assert
-            result.Should ().BeEmpty ();
+            ShouldHaveNoViolations (result);
         }
 
 
@@ -158,7 +160,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
             // assert
-            result.Should ().BeEmpty ();
+            ShouldHaveNoViolations (result);
         }
 
 
@@ -190,7 +192,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
             // assert
-            result.Should ().BeEmpty ();
+            ShouldHaveNoViolations (result);
         }
 
 
@@ -222,7 +224,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
             // assert
-            result.Should ().BeEmpty ();
+            ShouldHaveNoViolations (result);
         }
 
 
@@ -238,7 +240,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
             // assert
-            result.Should ().BeEmpty ();
+            ShouldHaveNoViolations (result);
         }
 
 
@@ -254,7 +256,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
             // assert
-            result.Should ().BeEmpty ();
+            ShouldHaveNoViolations (result);
         }
 
 
@@ -270,7 +272,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
             // assert
-            result.Should ().BeEmpty ();
+            ShouldHaveNoViolations (result);
         }
 
 
@@ -286,7 +288,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
             // assert
-            result.Should ().BeEmpty ();
+            ShouldHaveNoViolations (result);
         }
 
 
@@ -322,6 +324,12 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
+        private static void ShouldHaveNoViolations (IReadOnlyList<NotThreadSafeMemberInfo> result)
+        {
+            result.Should ().BeEmpty (because: FormatBecause (result));
+        }
+
+
         private static void ShouldHaveViolation<TMember> (IReadOnlyList<NotThreadSafeMemberInfo> result,
                                                           ThreadSafetyViolationType violationType,
                                                           string memberName = "member",
@@ -330,11 +338,21 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             result.Should ().NotBeNullOrEmpty ();
 
             if (expectedCount != null)
-                result.Should ().HaveCount (expectedCount.Value);
+                result.Should ().HaveCount (expectedCount.Value, because: FormatBecause (result));
 
             result.Should ().Contain (x => x.ViolationType == violationType &&
                                            x.Member.GetType ().IsSameOrInherits (typeof (TMember)) &&
                                            x.Member.Name == memberName);
+        }
+
+
+        private static string FormatBecause (IEnumerable<NotThreadSafeMemberInfo> result)
+        {
+            return "because: " + Environment.NewLine +
+                   Environment.NewLine +
+                   string.Join (Environment.NewLine,
+                                result.Select (x => "• " + x)) +
+                   Environment.NewLine + Environment.NewLine;
         }
 
         #endregion
