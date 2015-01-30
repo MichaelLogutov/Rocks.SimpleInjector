@@ -64,6 +64,7 @@
     <Compile Include="NotThreadSafeCheck\Models\NotThreadSafeMemberInfo.cs" />
     <Compile Include="NotThreadSafeCheck\Extensions.cs" />
     <Compile Include="NotThreadSafeCheck\Models\SimpleInjectorRegistrationInfo.cs" />
+    <Compile Include="NotThreadSafeCheck\Models\ThreadSafetyCheckResult.cs" />
     <Compile Include="NotThreadSafeCheck\ThreadSafetyChecker.cs" />
     <Compile Include="NotThreadSafeCheck\Models\ThreadSafetyViolationType.cs" />
     <Compile Include="NotThreadSafeCheck\Models\TypeThreadSafety.cs" />

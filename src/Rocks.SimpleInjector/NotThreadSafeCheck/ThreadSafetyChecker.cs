@@ -23,11 +23,12 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
     ///         mostly in unit tests or uppon application startup.
     ///     </para>
     /// </summary>
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class ThreadSafetyChecker
     {
         #region Private fields
 
-        protected readonly Dictionary<Type, TypeThreadSafety> typeThreadSafetyCache;
+        protected readonly Dictionary<Type, IReadOnlyList<NotThreadSafeMemberInfo>> cache;
         protected readonly InstanceProducer[] registrations;
 
         #endregion
@@ -43,7 +44,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
                 throw new ArgumentNullException ("container");
 
             this.registrations = container.GetCurrentRegistrations ();
-            this.typeThreadSafetyCache = new Dictionary<Type, TypeThreadSafety> ();
+            this.cache = new Dictionary<Type, IReadOnlyList<NotThreadSafeMemberInfo>> ();
 
             this.NotMutableTypes = new List<Type>
                                    {
@@ -75,17 +76,24 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         ///     Gets a list of potential non thread members of the type.
         /// </summary>
         [NotNull]
-        public List<NotThreadSafeMemberInfo> Check ([NotNull] Type type)
+        public IReadOnlyList<NotThreadSafeMemberInfo> Check ([NotNull] Type type)
         {
             if (type == null)
                 throw new ArgumentNullException ("type");
 
             if (this.IsNotMutableType (type))
-                return new List<NotThreadSafeMemberInfo> ();
+                return new NotThreadSafeMemberInfo[0];
 
-            var result = this.CheckInternal (type, new HashSet<Type> ());
+            IReadOnlyList<NotThreadSafeMemberInfo> result;
+            if (!this.cache.TryGetValue (type, out result))
+            {
+                // mark that we start to analyze the type 
+                // to prevent recursion stack overflow
+                this.cache[type] = null;
 
-            var members = this.GetAllMembers (type);
+                result = this.CheckInternal (type);
+                this.cache[type] = result;
+            }
 
             return result;
         }
@@ -96,7 +104,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         /// </summary>
         public void ClearCache ()
         {
-            this.typeThreadSafetyCache.Clear ();
+            this.cache.Clear ();
         }
 
         #endregion
@@ -119,14 +127,15 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         //}
 
 
-        protected virtual List<NotThreadSafeMemberInfo> CheckInternal ([NotNull] Type type, HashSet<Type> callStack)
+        protected virtual ThreadSafetyCheckResult CheckInternal ([NotNull] Type type)
         {
             var result = new List<NotThreadSafeMemberInfo> ();
 
             var events = this.GetAllEvents (type);
 
             result.AddRange (this.GetAllFields (type)
-                                 .Select (x => this.CheckField (x, events))
+                                 .Where (field => !events.Any (x => x.Name.Equals (field.Name, StringComparison.Ordinal)))
+                                 .Select (this.CheckField)
                                  .SkipNull ());
 
             result.AddRange (this.GetAllProperties (type)
@@ -137,20 +146,19 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
                                  .Select (this.CheckEvent)
                                  .SkipNull ());
 
-            return result;
+            return result.AsReadOnly ();
         }
 
 
         [CanBeNull]
-        protected virtual NotThreadSafeMemberInfo CheckField (FieldInfo field, IEnumerable<EventInfo> events)
+        protected virtual NotThreadSafeMemberInfo CheckField (FieldInfo field)
         {
             if (field.Name.EndsWith ("__BackingField", StringComparison.OrdinalIgnoreCase) ||
-                NotMutableAttribute.ExsitsOn (field) ||
-                events.Any (x => x.Name.Equals (field.Name, StringComparison.Ordinal)))
+                NotMutableAttribute.ExsitsOn (field))
                 return null;
 
             if (!field.IsInitOnly)
-                return new NotThreadSafeMemberInfo { Member = field, ViolationType = ThreadSafetyViolationType.NonReadonlyMember };
+                return new NotThreadSafeMemberInfo (field, ThreadSafetyViolationType.NonReadonlyMember);
 
             var result = this.CheckMember (field, field.FieldType);
 
@@ -165,7 +173,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
                 return null;
 
             if (property.CanWrite)
-                return new NotThreadSafeMemberInfo { Member = property, ViolationType = ThreadSafetyViolationType.NonReadonlyMember };
+                return new NotThreadSafeMemberInfo (property, ThreadSafetyViolationType.NonReadonlyMember);
 
             var result = this.CheckMember (property, property.PropertyType);
 
@@ -179,11 +187,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
             if (NotMutableAttribute.ExsitsOn (e))
                 return null;
 
-            var result = new NotThreadSafeMemberInfo
-                         {
-                             Member = e,
-                             ViolationType = ThreadSafetyViolationType.EventFound
-                         };
+            var result = new NotThreadSafeMemberInfo (e, ThreadSafetyViolationType.EventFound);
 
             return result;
         }
@@ -192,13 +196,15 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         [CanBeNull]
         protected virtual NotThreadSafeMemberInfo CheckMember (MemberInfo member, Type memberType)
         {
-            if (this.IsNotMutableType (memberType) || this.HasSingletonRegistration (this.registrations, memberType))
+            if (this.IsNotMutableType (memberType) || this.HasSingletonRegistration (memberType))
                 return null;
 
-            if (this.HasNotSingletonRegistration (this.registrations, memberType))
-                return new NotThreadSafeMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.NonSingletonRegistration };
+            if (this.HasNotSingletonRegistration (memberType))
+                return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.NonSingletonRegistration);
 
-            return new NotThreadSafeMemberInfo { Member = member, ViolationType = ThreadSafetyViolationType.MutableReadonlyMember };
+            //this.Check (memberType);
+
+            return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.MutableReadonlyMember);
         }
 
 
@@ -215,31 +221,17 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         }
 
 
-        protected virtual bool HasNotSingletonRegistration (IEnumerable<InstanceProducer> registrations,
-                                                            Type type)
+        protected virtual bool HasNotSingletonRegistration (Type type)
         {
-            var result = registrations.Any (x => x.ServiceType == type && x.Lifestyle != Lifestyle.Singleton);
+            var result = this.registrations.Any (x => x.ServiceType == type && x.Lifestyle != Lifestyle.Singleton);
 
             return result;
         }
 
 
-        protected virtual bool HasSingletonRegistration (IEnumerable<InstanceProducer> registrations,
-                                                         Type type)
+        protected virtual bool HasSingletonRegistration (Type type)
         {
-            var result = registrations.Any (x => x.ServiceType == type && x.Lifestyle == Lifestyle.Singleton);
-
-            return result;
-        }
-
-
-        protected virtual List<MemberInfo> GetAllMembers (Type type)
-        {
-            var result = type.GetMembers (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                             .ToList ();
-
-            if (type.BaseType != null)
-                result.AddRange (this.GetAllMembers (type.BaseType));
+            var result = this.registrations.Any (x => x.ServiceType == type && x.Lifestyle == Lifestyle.Singleton);
 
             return result;
         }

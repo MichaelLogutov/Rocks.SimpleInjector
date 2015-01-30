@@ -322,7 +322,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        private static void ShouldHaveViolation<TMember> (IList<NotThreadSafeMemberInfo> result,
+        private static void ShouldHaveViolation<TMember> (IReadOnlyList<NotThreadSafeMemberInfo> result,
                                                           ThreadSafetyViolationType violationType,
                                                           string memberName = "member",
                                                           int? expectedCount = null)
