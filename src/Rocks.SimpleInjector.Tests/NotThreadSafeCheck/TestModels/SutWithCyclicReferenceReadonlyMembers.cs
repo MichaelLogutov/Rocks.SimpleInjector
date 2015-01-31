@@ -7,6 +7,9 @@
 #pragma warning restore 169
 
         // ReSharper disable once UnusedMember.Global
-        public SutWithCyclicReferenceReadonlyMembers2 Member { get; set; }
+        public SutWithCyclicReferenceReadonlyMembers2 Member
+        {
+            get { return null; }
+        }
     }
 }

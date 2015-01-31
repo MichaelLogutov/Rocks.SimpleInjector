@@ -81,20 +81,6 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
             if (type == null)
                 throw new ArgumentNullException ("type");
 
-            if (this.IsNotMutableType (type))
-                return new NotThreadSafeMemberInfo[0];
-
-            //IReadOnlyList<NotThreadSafeMemberInfo> result;
-            //if (!this.cache.TryGetValue (type, out result))
-            //{
-            //    // mark that we start to analyze the type 
-            //    // to prevent recursion stack overflow
-            //    this.cache[type] = null;
-
-            //    result = this.CheckInternal (type);
-            //    this.cache[type] = result;
-            //}
-
             var result = this.CheckInternal (type);
 
             // ReSharper disable once AssignNullToNotNullAttribute
@@ -114,24 +100,11 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
         #region Protected methods
 
-        //protected virtual TypeThreadSafety GetTypeThreadSafety ([NotNull] Type type,
-        //                                                        [NotNull] HashSet<Type> callStack,
-        //                                                        [NotNull] IList<MemberInfo> members)
-        //{
-        //    if (callStack.Contains (type))
-        //        return TypeThreadSafety.PotentiallySafe;
-
-        //    var has_potentially_safe_members = false;
-
-        //    foreach (var member in members)
-        //    {
-        //        this.IsNotMutableType (member)
-        //    }
-        //}
-
-
         protected virtual ThreadSafetyCheckResult CheckInternal ([NotNull] Type type)
         {
+            if (this.IsNotMutableType (type))
+                return ThreadSafetyCheckResult.Safe;
+
             ThreadSafetyCheckResult result;
             if (!this.cache.TryGetValue (type, out result))
             {
@@ -219,8 +192,11 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
             if (this.HasNotSingletonRegistration (memberType))
                 return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.NonSingletonRegistration);
 
+            if (memberType == typeof (object))
+                return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.MutableReadonlyMember);
+
             var check_result = this.CheckInternal (memberType);
-            
+
             if (!check_result.NotThreadSafeMembers.IsNullOrEmpty ())
                 return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.MutableReadonlyMember);
 

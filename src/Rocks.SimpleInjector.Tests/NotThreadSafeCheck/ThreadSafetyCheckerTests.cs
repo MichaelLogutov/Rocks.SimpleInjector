@@ -197,7 +197,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
         [TestMethod]
-        public void WithMutablePropertyWithoutSet_ReturnsNothing ()
+        public void WithMutablePropertyWithoutSet_ReturnsIt ()
         {
             // arrange
             var sut = CreateSut ();
