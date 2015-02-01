@@ -325,8 +325,8 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             // assert
             ShouldHaveViolations (result);
         }
-        
-        
+
+
         [TestMethod]
         public void WithBaseClassWithLinqDataContextProperty_ReturnsIt ()
         {
@@ -340,6 +340,38 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
             // assert
             ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "DataContext");
+        }
+
+
+        [TestMethod]
+        public void WithStaticReadonlyMutableField_ReturnsIt ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (SutWithStaticReadonlyMutableField));
+
+
+            // assert
+            ShouldHaveViolation<FieldInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
+        }
+
+
+        [TestMethod]
+        public void WithStaticReadonlyMutableProperty_ReturnsIt ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (SutWithStaticReadonlyMutableProperty));
+
+
+            // assert
+            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
         }
 
         #endregion

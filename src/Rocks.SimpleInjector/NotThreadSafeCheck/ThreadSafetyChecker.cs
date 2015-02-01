@@ -28,6 +28,9 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
     {
         #region Private fields
 
+        protected const BindingFlags DefaultBindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly |
+                                                           BindingFlags.Instance | BindingFlags.Static;
+
         protected readonly Dictionary<Type, ThreadSafetyCheckResult> cache;
         protected readonly InstanceProducer[] registrations;
 
@@ -238,8 +241,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
         protected virtual List<FieldInfo> GetAllFields (Type type)
         {
-            var result = type.GetFields (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                             .ToList ();
+            var result = type.GetFields (DefaultBindingFlags).ToList ();
 
             if (type.BaseType != null)
                 result.AddRange (this.GetAllFields (type.BaseType));
@@ -250,8 +252,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
         protected virtual List<EventInfo> GetAllEvents (Type type)
         {
-            var result = type.GetEvents (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                             .ToList ();
+            var result = type.GetEvents (DefaultBindingFlags).ToList ();
 
             if (type.BaseType != null)
                 result.AddRange (this.GetAllEvents (type.BaseType));
@@ -262,8 +263,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
         protected virtual List<PropertyInfo> GetAllProperties (Type type)
         {
-            var result = type.GetProperties (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                             .ToList ();
+            var result = type.GetProperties (DefaultBindingFlags).ToList ();
 
             if (type.BaseType != null)
                 result.AddRange (this.GetAllProperties (type.BaseType));
