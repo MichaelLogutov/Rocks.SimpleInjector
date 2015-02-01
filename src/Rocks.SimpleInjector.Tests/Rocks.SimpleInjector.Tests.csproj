@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="NotThreadSafeCheck\Suts\SutWithStaticReadonlyMutableProperty.cs" />
     <Compile Include="NotThreadSafeCheck\Suts\SutWithStaticReadonlyMutableField.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithCompilerGeneratedCachedAnonymousMethodDelegate.cs" />
     <Compile Include="NotThreadSafeCheck\ThreadSafetyCheckerTests.cs" />
     <Compile Include="NotThreadSafeCheck\Services\NotRegisteredService.cs" />
     <Compile Include="NotThreadSafeCheck\Services\SingletonService.cs" />

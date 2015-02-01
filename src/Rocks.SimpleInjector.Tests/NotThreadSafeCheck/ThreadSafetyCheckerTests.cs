@@ -374,6 +374,22 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
         }
 
+
+        [TestMethod]
+        public void WithCompilerGeneratedCachedAnonymousMethodDelegate_ReturnsNothing ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (SutWithCompilerGeneratedCachedAnonymousMethodDelegate));
+
+
+            // assert
+            ShouldHaveNoViolations (result);
+        }
+
         #endregion
 
         #region Private methods

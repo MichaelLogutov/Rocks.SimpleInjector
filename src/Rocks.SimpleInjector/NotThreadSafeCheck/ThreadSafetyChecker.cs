@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Rocks.Helpers;
 using Rocks.SimpleInjector.Attributes;
@@ -146,8 +147,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         [CanBeNull]
         protected virtual NotThreadSafeMemberInfo CheckField (FieldInfo field)
         {
-            if (field.Name.EndsWith ("__BackingField", StringComparison.OrdinalIgnoreCase) ||
-                NotMutableAttribute.ExsitsOn (field))
+            if (this.IsCompilerGenerated (field) || NotMutableAttribute.ExsitsOn (field))
                 return null;
 
             if (!field.IsInitOnly)
@@ -162,7 +162,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         [CanBeNull]
         protected virtual NotThreadSafeMemberInfo CheckProperty (PropertyInfo property)
         {
-            if (NotMutableAttribute.ExsitsOn (property))
+            if (this.IsCompilerGenerated (property) || NotMutableAttribute.ExsitsOn (property))
                 return null;
 
             if (property.CanWrite)
@@ -177,7 +177,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         [CanBeNull]
         protected virtual NotThreadSafeMemberInfo CheckEvent (EventInfo e)
         {
-            if (NotMutableAttribute.ExsitsOn (e))
+            if (this.IsCompilerGenerated (e) || NotMutableAttribute.ExsitsOn (e))
                 return null;
 
             var result = new NotThreadSafeMemberInfo (e, ThreadSafetyViolationType.EventFound);
@@ -220,6 +220,12 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
                 return true;
 
             return false;
+        }
+
+
+        protected virtual bool IsCompilerGenerated (MemberInfo member)
+        {
+            return member.GetCustomAttributes (typeof (CompilerGeneratedAttribute), false).Length > 0;
         }
 
 
