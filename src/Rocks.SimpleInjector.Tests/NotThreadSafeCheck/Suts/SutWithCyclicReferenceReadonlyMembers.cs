@@ -1,4 +1,4 @@
-﻿namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck.TestModels
+﻿namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Suts
 {
     internal class SutWithCyclicReferenceReadonlyMembers
     {

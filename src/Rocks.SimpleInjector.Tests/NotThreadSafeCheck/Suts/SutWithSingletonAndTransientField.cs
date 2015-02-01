@@ -1,4 +1,6 @@
-﻿namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck.TestModels
+﻿using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Services;
+
+namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Suts
 {
     internal class SutWithSingletonAndTransientField
     {

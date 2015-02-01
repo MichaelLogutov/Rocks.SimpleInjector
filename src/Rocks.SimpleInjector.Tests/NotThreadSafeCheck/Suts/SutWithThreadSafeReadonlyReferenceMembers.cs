@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Services;
 
-namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck.TestModels
+namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Suts
 {
     internal class SutWithThreadSafeReadonlyReferenceMembers
     {

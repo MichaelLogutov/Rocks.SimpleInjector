@@ -50,6 +50,7 @@
       <HintPath>..\packages\SimpleInjector.2.7.0\lib\net45\SimpleInjector.Diagnostics.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -67,37 +68,41 @@
   </Choose>
   <ItemGroup>
     <Compile Include="NotThreadSafeCheck\ThreadSafetyCheckerTests.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\NotRegisteredService.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SingletonService.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceAndNotThreadSafeMembers.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceAndNotThreadSafeMembers2.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceReadonlyMembers.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithCyclicReferenceReadonlyMembers2.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithEvent.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithMutablePropertyWithoutSet.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithNonReadonlyField.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithNotMutableReferenceReadonlyFields.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithNotRegisteredField.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithPropertyWithSet.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithMutableMembersWithNotMutableAttribute.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithReadonlyMutableField.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithReadonlyValueTypeField.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithSelfReferenceReadonlyMembers.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithSingletonAndTransientField.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithSingletonField.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithThreadSafeReadonlyReferenceMembers.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithTransientField.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithTransientFieldFromBase.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithTransientProperty.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\SutWithValueTypePropertyWithoutSet.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\ThreadSafeService.cs" />
-    <Compile Include="NotThreadSafeCheck\TestModels\TransientService.cs" />
+    <Compile Include="NotThreadSafeCheck\Services\NotRegisteredService.cs" />
+    <Compile Include="NotThreadSafeCheck\Services\SingletonService.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithCyclicReferenceAndNotThreadSafeMembers.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithCyclicReferenceAndNotThreadSafeMembers2.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithCyclicReferenceReadonlyMembers.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithCyclicReferenceReadonlyMembers2.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithEvent.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithMutablePropertyWithoutSet.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithNonReadonlyField.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithNotMutableReferenceReadonlyFields.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithNotRegisteredField.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithPropertyWithSet.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithMutableMembersWithNotMutableAttribute.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithReadonlyMutableField.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithReadonlyValueTypeField.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithSelfReferenceReadonlyMembers.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithSingletonAndTransientField.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithSingletonField.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithThreadSafeReadonlyReferenceMembers.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithTransientField.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithTransientFieldFromBase.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithTransientProperty.cs" />
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithValueTypePropertyWithoutSet.cs" />
+    <Compile Include="NotThreadSafeCheck\Services\ThreadSafeService.cs" />
+    <Compile Include="NotThreadSafeCheck\Services\TransientService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Rocks.SimpleInjector.Tests.Library\Rocks.SimpleInjector.Tests.Library.csproj">
+      <Project>{78EB73F3-8188-4059-81F2-B3CAA0CB0669}</Project>
+      <Name>Rocks.SimpleInjector.Tests.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rocks.SimpleInjector\Rocks.SimpleInjector.csproj">
       <Project>{1E3EB73A-5314-4104-A678-39E601501AE3}</Project>
       <Name>Rocks.SimpleInjector</Name>

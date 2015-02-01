@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using FluentAssertions;
 using FluentAssertions.Common;
 using System.Linq;
@@ -7,7 +8,9 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rocks.SimpleInjector.NotThreadSafeCheck;
 using Rocks.SimpleInjector.NotThreadSafeCheck.Models;
-using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.TestModels;
+using Rocks.SimpleInjector.Tests.Library;
+using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Services;
+using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Suts;
 using SimpleInjector;
 
 namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
@@ -293,7 +296,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
         [TestMethod]
-        public void WithCyclicReferenceAndNotThreadSafeMembers_ReturnsNothing ()
+        public void WithCyclicReferenceAndNotThreadSafeMembers_ReturnsThem ()
         {
             // arrange
             var sut = CreateSut ();
@@ -305,6 +308,38 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
             // assert
             ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
+        }
+
+
+        [TestMethod]
+        public void LinqDataContext_ReturnsViolations ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (DataContext));
+
+
+            // assert
+            ShouldHaveViolations (result);
+        }
+        
+        
+        [TestMethod]
+        public void WithBaseClassWithLinqDataContextProperty_ReturnsIt ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (SutWithBaseClassWithLinqDataContextProperty));
+
+
+            // assert
+            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "DataContext");
         }
 
         #endregion
@@ -327,6 +362,12 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         private static void ShouldHaveNoViolations (IReadOnlyList<NotThreadSafeMemberInfo> result)
         {
             result.Should ().BeEmpty (because: FormatBecause (result));
+        }
+
+
+        private static void ShouldHaveViolations (IReadOnlyList<NotThreadSafeMemberInfo> result)
+        {
+            result.Should ().NotBeEmpty (because: FormatBecause (result));
         }
 
 
