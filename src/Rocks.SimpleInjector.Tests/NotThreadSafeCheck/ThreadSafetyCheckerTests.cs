@@ -389,6 +389,21 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             // assert
             ShouldHaveNoViolations (result);
         }
+        
+        [TestMethod]
+        public void WithWithConstantField_ReturnsNothing ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (SutWithConstantField));
+
+
+            // assert
+            ShouldHaveNoViolations (result);
+        }
 
         #endregion
 

@@ -67,6 +67,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="NotThreadSafeCheck\Suts\SutWithConstantField.cs" />
     <Compile Include="NotThreadSafeCheck\Suts\SutWithStaticReadonlyMutableProperty.cs" />
     <Compile Include="NotThreadSafeCheck\Suts\SutWithStaticReadonlyMutableField.cs" />
     <Compile Include="NotThreadSafeCheck\Suts\SutWithCompilerGeneratedCachedAnonymousMethodDelegate.cs" />

@@ -147,7 +147,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         [CanBeNull]
         protected virtual NotThreadSafeMemberInfo CheckField (FieldInfo field)
         {
-            if (this.IsCompilerGenerated (field) || NotMutableAttribute.ExsitsOn (field))
+            if (field.IsLiteral || this.IsCompilerGenerated (field) || NotMutableAttribute.ExsitsOn (field))
                 return null;
 
             if (!field.IsInitOnly)
