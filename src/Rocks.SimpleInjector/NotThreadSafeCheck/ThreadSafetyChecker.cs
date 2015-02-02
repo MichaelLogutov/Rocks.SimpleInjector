@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Rocks.Helpers;
 using Rocks.SimpleInjector.Attributes;
 using Rocks.SimpleInjector.NotThreadSafeCheck.Models;
 using SimpleInjector;
+using Container = SimpleInjector.Container;
 
 namespace Rocks.SimpleInjector.NotThreadSafeCheck
 {
@@ -52,11 +54,13 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
             this.NotMutableTypes = new List<Type>
                                    {
+                                       typeof (string),
                                        typeof (IEnumerable),
                                        typeof (IEnumerable<>),
                                        typeof (IReadOnlyCollection<>),
                                        typeof (IReadOnlyList<>),
-                                       typeof (IReadOnlyDictionary<,>)
+                                       typeof (IReadOnlyDictionary<,>),
+                                       typeof (Regex)
                                    };
         }
 
@@ -66,11 +70,16 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
         /// <summary>
         ///     A list of reference types that are considered not mutable.
-        ///     By default includes: <see cref="IEnumerable" />, <see cref="IEnumerable{T}" />,
-        ///     <see cref="IReadOnlyCollection{T}" />, <see cref="IReadOnlyList{T}" />,
-        ///     <see cref="IReadOnlyDictionary{TKey,TValue}" />.
+        ///     By default includes:
+        ///     <see cref="string" />,
+        ///     <see cref="IEnumerable" />,
+        ///     <see cref="IEnumerable{T}" />,
+        ///     <see cref="IReadOnlyCollection{T}" />,
+        ///     <see cref="IReadOnlyList{T}" />,
+        ///     <see cref="IReadOnlyDictionary{TKey,TValue}" />,
+        ///     <see cref="Regex" />.
         /// </summary>
-        public List<Type> NotMutableTypes { get; set; }
+        public IList<Type> NotMutableTypes { get; set; }
 
         #endregion
 
@@ -212,7 +221,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
         protected virtual bool IsNotMutableType (Type type)
         {
-            if (type.IsValueType || type == typeof (string))
+            if (type.IsValueType)
                 return true;
 
             if (this.NotMutableTypes.Any (t => t == type ||
