@@ -4,18 +4,18 @@ using Rocks.SimpleInjector.Attributes;
 
 namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Suts
 {
-    internal class SutWithMutableMembersWithNotMutableAttribute
+    internal class SutWithMutableMembersWithThreadSafeAttribute
     {
 #pragma warning disable 169
-        [NotMutable]
+        [ThreadSafe]
         private List<string> member;
 #pragma warning restore 169
 
-        [NotMutable]
+        [ThreadSafe]
         public List<string> Member { get; set; }
 
 #pragma warning disable 67
-        [NotMutable]
+        [ThreadSafe]
         public event EventHandler Event;
 #pragma warning restore 67
     }

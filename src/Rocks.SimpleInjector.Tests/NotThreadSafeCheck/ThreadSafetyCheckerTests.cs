@@ -232,14 +232,14 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
         [TestMethod]
-        public void WithMutableMembersWithNotMutableAttribute_ReturnsNothing ()
+        public void WithMutableMembersWithThreadSafeAttribute_ReturnsNothing ()
         {
             // arrange
             var sut = CreateSut ();
 
 
             // act
-            var result = sut.Check (typeof (SutWithMutableMembersWithNotMutableAttribute));
+            var result = sut.Check (typeof (SutWithMutableMembersWithThreadSafeAttribute));
 
 
             // assert
@@ -403,6 +403,38 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
             // assert
             ShouldHaveNoViolations (result);
+        }
+        
+        
+        [TestMethod]
+        public void WithBaseGenericThreadSafeClass_ReturnsNothing ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (SutWithBaseGenericThreadSafeClass));
+
+
+            // assert
+            ShouldHaveNoViolations (result);
+        }
+
+
+        [TestMethod]
+        public void WithBaseGenericClassAndMutableReadonlyProperty_ReturnsIt ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (SutWithBaseGenericClassAndMutableReadonlyProperty));
+
+
+            // assert
+            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "Property");
         }
 
         #endregion

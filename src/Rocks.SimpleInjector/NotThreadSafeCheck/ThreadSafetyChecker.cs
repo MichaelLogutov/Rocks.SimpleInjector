@@ -10,7 +10,6 @@ using Rocks.Helpers;
 using Rocks.SimpleInjector.Attributes;
 using Rocks.SimpleInjector.NotThreadSafeCheck.Models;
 using SimpleInjector;
-using Container = SimpleInjector.Container;
 
 namespace Rocks.SimpleInjector.NotThreadSafeCheck
 {
@@ -156,7 +155,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         [CanBeNull]
         protected virtual NotThreadSafeMemberInfo CheckField (FieldInfo field)
         {
-            if (field.IsLiteral || this.IsCompilerGenerated (field) || NotMutableAttribute.ExsitsOn (field))
+            if (field.IsLiteral || this.IsCompilerGenerated (field) || ThreadSafeAttribute.ExsitsOn (field))
                 return null;
 
             if (!field.IsInitOnly)
@@ -171,7 +170,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         [CanBeNull]
         protected virtual NotThreadSafeMemberInfo CheckProperty (PropertyInfo property)
         {
-            if (this.IsCompilerGenerated (property) || NotMutableAttribute.ExsitsOn (property))
+            if (this.IsCompilerGenerated (property) || ThreadSafeAttribute.ExsitsOn (property))
                 return null;
 
             if (property.CanWrite)
@@ -186,7 +185,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         [CanBeNull]
         protected virtual NotThreadSafeMemberInfo CheckEvent (EventInfo e)
         {
-            if (this.IsCompilerGenerated (e) || NotMutableAttribute.ExsitsOn (e))
+            if (this.IsCompilerGenerated (e) || ThreadSafeAttribute.ExsitsOn (e))
                 return null;
 
             var result = new NotThreadSafeMemberInfo (e, ThreadSafetyViolationType.EventFound);
