@@ -51,7 +51,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
             this.registrations = container.GetCurrentRegistrations ();
             this.cache = new Dictionary<Type, ThreadSafetyCheckResult> ();
 
-            this.NotMutableTypes = new List<Type>
+            this.KnownNotMutableTypes = new List<Type>
                                    {
                                        typeof (string),
                                        typeof (IEnumerable),
@@ -78,7 +78,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         ///     <see cref="IReadOnlyDictionary{TKey,TValue}" />,
         ///     <see cref="Regex" />.
         /// </summary>
-        public IList<Type> NotMutableTypes { get; set; }
+        public IList<Type> KnownNotMutableTypes { get; set; }
 
         #endregion
 
@@ -223,11 +223,20 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
             if (type.IsValueType)
                 return true;
 
-            if (this.NotMutableTypes.Any (t => t == type ||
-                                               (t.IsGenericTypeDefinition && type.IsGenericType && type.GetGenericTypeDefinition () == t)))
+            if (this.KnownNotMutableTypes.Any (t => t == type ||
+                                               (t.IsGenericTypeDefinition &&
+                                                type.IsGenericType &&
+                                                type.GetGenericTypeDefinition () == t &&
+                                                this.IsNotMutableGenericType (type))))
                 return true;
 
             return false;
+        }
+
+
+        protected virtual bool IsNotMutableGenericType (Type type)
+        {
+            return type.GenericTypeArguments.All (this.IsNotMutableType);
         }
 
 

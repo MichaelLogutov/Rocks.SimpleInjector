@@ -389,7 +389,8 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             // assert
             ShouldHaveNoViolations (result);
         }
-        
+
+
         [TestMethod]
         public void WithWithConstantField_ReturnsNothing ()
         {
@@ -404,8 +405,8 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             // assert
             ShouldHaveNoViolations (result);
         }
-        
-        
+
+
         [TestMethod]
         public void WithBaseGenericThreadSafeClass_ReturnsNothing ()
         {
@@ -435,6 +436,38 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
             // assert
             ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "Property");
+        }
+
+
+        [TestMethod]
+        public void WithKnownNotMutableGenericTypeButWithMutableArgument_ReturnsIt ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (SutWithKnownNotMutableGenericTypeButWithMutableArgument));
+
+
+            // assert
+            ShouldHaveViolation<MemberInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember);
+        }
+
+
+        [TestMethod]
+        public void WithKnownNotMutableGenericTypesAndComplexThreadSafeArguments_ReturnsIt ()
+        {
+            // arrange
+            var sut = CreateSut ();
+
+
+            // act
+            var result = sut.Check (typeof (SutWithKnownNotMutableGenericTypesAndComplexThreadSafeArguments));
+
+
+            // assert
+            ShouldHaveNoViolations (result);
         }
 
         #endregion
