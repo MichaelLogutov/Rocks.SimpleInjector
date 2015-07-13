@@ -96,7 +96,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
             var result = this.CheckInternal (type);
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            return result.NotThreadSafeMembers.AsReadOnlyList ();
+            return result.NotThreadSafeMembers.ConvertToReadOnlyList ();
         }
 
 

@@ -37,19 +37,17 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core">
-      <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleInjector, Version=2.7.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions, Version=3.4.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SimpleInjector.2.7.1\lib\net45\SimpleInjector.dll</HintPath>
+      <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector.Diagnostics, Version=2.7.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SimpleInjector.2.7.1\lib\net45\SimpleInjector.Diagnostics.dll</HintPath>
+      <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=2.8.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SimpleInjector.2.8.0\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
