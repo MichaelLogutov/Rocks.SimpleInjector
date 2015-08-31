@@ -479,7 +479,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             var container = new Container ();
 
             container.Register<TransientService> (Lifestyle.Transient);
-            container.RegisterSingle<SingletonService> ();
+            container.RegisterSingleton<SingletonService> ();
 
             var sut = new ThreadSafetyChecker (container);
 
