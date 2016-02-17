@@ -46,6 +46,9 @@ namespace Rocks.SimpleInjector
 
             foreach (var t in types)
             {
+                if (NoAutoRegistrationAttribute.ExsitsOn (t.InstanceType) || NoAutoRegistrationAttribute.ExsitsOn (t.InterfaceType))
+                    continue;
+
                 var lifestyle = GetLifestyle (t.InstanceType,
                                               defaultLifestyle,
                                               customLifestyleSelector);

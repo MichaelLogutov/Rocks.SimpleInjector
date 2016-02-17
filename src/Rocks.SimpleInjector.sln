@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.SimpleInjector", "Rocks.SimpleInjector\Rocks.SimpleInjector.csproj", "{1E3EB73A-5314-4104-A678-39E601501AE3}"
 EndProject
@@ -34,7 +34,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{095C370D-FE5D-42AA-9F34-FA4CBC2D0620} = {DB19986A-0918-4FDC-8033-DEFC5CCAC527}
 		{78EB73F3-8188-4059-81F2-B3CAA0CB0669} = {DB19986A-0918-4FDC-8033-DEFC5CCAC527}
 	EndGlobalSection
 EndGlobal

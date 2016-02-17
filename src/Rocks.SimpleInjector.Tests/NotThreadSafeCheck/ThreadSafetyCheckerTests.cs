@@ -5,22 +5,21 @@ using FluentAssertions;
 using FluentAssertions.Common;
 using System.Linq;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rocks.SimpleInjector.NotThreadSafeCheck;
 using Rocks.SimpleInjector.NotThreadSafeCheck.Models;
 using Rocks.SimpleInjector.Tests.Library;
 using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Services;
 using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Suts;
 using SimpleInjector;
+using Xunit;
 
 namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 {
-    [TestClass]
     public class ThreadSafetyCheckerTests
     {
         #region Public methods
 
-        [TestMethod]
+        [Fact]
         public void WithTransientField_ReturnsIt ()
         {
             // arrange
@@ -36,7 +35,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithTransientFieldFromBase_ReturnsIt ()
         {
             // arrange
@@ -52,7 +51,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithSingletonField_ReturnsNothing ()
         {
             // arrange
@@ -68,7 +67,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithSingletonAndTransientField_ReturnsNothing ()
         {
             // arrange
@@ -84,7 +83,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithEvent_ReturnsIt ()
         {
             // arrange
@@ -100,7 +99,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithTransientAutoProperty_ReturnsIt ()
         {
             // arrange
@@ -119,7 +118,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithNonReadonlyField_ReturnsIt ()
         {
             // arrange
@@ -135,7 +134,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithReadonlyMutableField_ReturnsIt ()
         {
             // arrange
@@ -151,7 +150,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithReadonlyValueTypeField_ReturnsNothing ()
         {
             // arrange
@@ -167,7 +166,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithPropertyWithSet_ReturnsNothing ()
         {
             // arrange
@@ -183,7 +182,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithValueTypePropertyWithoutSet_ReturnsNothing ()
         {
             // arrange
@@ -199,7 +198,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithMutablePropertyWithoutSet_ReturnsIt ()
         {
             // arrange
@@ -215,7 +214,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithNotMutableReferenceReadonlyFields_ReturnsNothing ()
         {
             // arrange
@@ -231,7 +230,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithMutableMembersWithThreadSafeAttribute_ReturnsNothing ()
         {
             // arrange
@@ -247,7 +246,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithThreadSafeReadonlyReferenceMembers_ReturnsNothing ()
         {
             // arrange
@@ -263,7 +262,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithSelfReferenceReadonlyMembers_ReturnsNothing ()
         {
             // arrange
@@ -279,7 +278,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithCyclicReferenceReadonlyMembers_ReturnsNothing ()
         {
             // arrange
@@ -295,7 +294,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithCyclicReferenceAndNotThreadSafeMembers_ReturnsThem ()
         {
             // arrange
@@ -311,7 +310,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void LinqDataContext_ReturnsViolations ()
         {
             // arrange
@@ -327,7 +326,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithBaseClassWithLinqDataContextProperty_ReturnsIt ()
         {
             // arrange
@@ -343,7 +342,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithStaticReadonlyMutableField_ReturnsIt ()
         {
             // arrange
@@ -359,7 +358,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithStaticReadonlyMutableProperty_ReturnsIt ()
         {
             // arrange
@@ -375,7 +374,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithCompilerGeneratedCachedAnonymousMethodDelegate_ReturnsNothing ()
         {
             // arrange
@@ -391,7 +390,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithWithConstantField_ReturnsNothing ()
         {
             // arrange
@@ -407,7 +406,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithBaseGenericThreadSafeClass_ReturnsNothing ()
         {
             // arrange
@@ -423,7 +422,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithBaseGenericClassAndMutableReadonlyProperty_ReturnsIt ()
         {
             // arrange
@@ -439,7 +438,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithKnownNotMutableGenericTypeButWithMutableArgument_ReturnsIt ()
         {
             // arrange
@@ -455,7 +454,7 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         }
 
 
-        [TestMethod]
+        [Fact]
         public void WithKnownNotMutableGenericTypesAndComplexThreadSafeArguments_ReturnsIt ()
         {
             // arrange
