@@ -28,44 +28,36 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class ThreadSafetyChecker
     {
-        #region Private fields
-
         protected const BindingFlags DefaultBindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly |
                                                            BindingFlags.Instance | BindingFlags.Static;
 
         protected readonly Dictionary<Type, ThreadSafetyCheckResult> cache;
         protected readonly InstanceProducer[] registrations;
 
-        #endregion
-
-        #region Construct
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
-        public ThreadSafetyChecker ([NotNull] Container container)
+        public ThreadSafetyChecker([NotNull] Container container)
         {
             if (container == null)
-                throw new ArgumentNullException ("container");
+                throw new ArgumentNullException(nameof(container));
 
-            this.registrations = container.GetCurrentRegistrations ();
-            this.cache = new Dictionary<Type, ThreadSafetyCheckResult> ();
+            this.registrations = container.GetCurrentRegistrations();
+            this.cache = new Dictionary<Type, ThreadSafetyCheckResult>();
 
             this.KnownNotMutableTypes = new List<Type>
-                                   {
-                                       typeof (string),
-                                       typeof (IEnumerable),
-                                       typeof (IEnumerable<>),
-                                       typeof (IReadOnlyCollection<>),
-                                       typeof (IReadOnlyList<>),
-                                       typeof (IReadOnlyDictionary<,>),
-                                       typeof (Regex)
-                                   };
+                                        {
+                                            typeof(string),
+                                            typeof(IEnumerable),
+                                            typeof(IEnumerable<>),
+                                            typeof(IReadOnlyCollection<>),
+                                            typeof(IReadOnlyList<>),
+                                            typeof(IReadOnlyDictionary<,>),
+                                            typeof(Regex)
+                                        };
         }
 
-        #endregion
-
-        #region Public properties
 
         /// <summary>
         ///     A list of reference types that are considered not mutable.
@@ -80,64 +72,58 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         /// </summary>
         public IList<Type> KnownNotMutableTypes { get; set; }
 
-        #endregion
-
-        #region Public methods
 
         /// <summary>
         ///     Gets a list of potential non thread members of the type.
         /// </summary>
         [NotNull]
-        public IReadOnlyList<NotThreadSafeMemberInfo> Check ([NotNull] Type type)
+        public IReadOnlyList<NotThreadSafeMemberInfo> Check([NotNull] Type type)
         {
             if (type == null)
-                throw new ArgumentNullException ("type");
+                throw new ArgumentNullException(nameof(type));
 
-            var result = this.CheckInternal (type);
+            var result = this.CheckInternal(type);
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            return result.NotThreadSafeMembers.ConvertToReadOnlyList ();
+            return result.NotThreadSafeMembers.ConvertToReadOnlyList();
         }
 
 
         /// <summary>
         ///     Clears internal cache of checked types.
         /// </summary>
-        public void ClearCache ()
+        public void ClearCache()
         {
-            this.cache.Clear ();
+            this.cache.Clear();
         }
 
-        #endregion
 
-        #region Protected methods
-
-        protected virtual ThreadSafetyCheckResult CheckInternal ([NotNull] Type type)
+        protected virtual ThreadSafetyCheckResult CheckInternal([NotNull] Type type)
         {
-            if (this.IsNotMutableType (type))
+            if (this.IsNotMutableType(type))
                 return ThreadSafetyCheckResult.Safe;
 
             ThreadSafetyCheckResult result;
-            if (!this.cache.TryGetValue (type, out result))
+            if (!this.cache.TryGetValue(type, out result))
             {
                 // mark as "checking started" to prevent infinite recursion
                 this.cache[type] = null;
 
-                result = new ThreadSafetyCheckResult ();
+                result = new ThreadSafetyCheckResult();
 
-                var events = this.GetAllEvents (type);
+                var events = this.GetAllEvents(type);
 
-                foreach (var not_thread_safe_member in this.GetAllFields (type)
-                                                           .Where (field => !events.Any (x => x.Name.Equals (field.Name, StringComparison.Ordinal)))
-                                                           .Select (this.CheckField)
-                                                           .Concat (this.GetAllProperties (type).Select (this.CheckProperty))
-                                                           .Concat (events.Select (this.CheckEvent))
-                                                           .SkipNull ())
+                foreach (var not_thread_safe_member in this.GetAllFields(type)
+                                                           .Where(field => !events.Any(x => x.Name.Equals(field.Name, StringComparison.Ordinal)))
+                                                           .Select(this.CheckField)
+                                                           .Concat(this.GetAllProperties(type).Select(this.CheckProperty))
+                                                           .Concat(events.Select(this.CheckEvent))
+                                                           .SkipNull())
                 {
-                    if (ReferenceEquals (not_thread_safe_member, NotThreadSafeMemberInfo.PotentiallySafe))
+                    if (ReferenceEquals(not_thread_safe_member, NotThreadSafeMemberInfo.PotentiallySafe))
                         result.NotFullyChecked = true;
                     else
-                        result.NotThreadSafeMembers.Add (not_thread_safe_member);
+                        result.NotThreadSafeMembers.Add(not_thread_safe_member);
                 }
 
                 this.cache[type] = result;
@@ -153,63 +139,63 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
 
 
         [CanBeNull]
-        protected virtual NotThreadSafeMemberInfo CheckField (FieldInfo field)
+        protected virtual NotThreadSafeMemberInfo CheckField(FieldInfo field)
         {
-            if (field.IsLiteral || this.IsCompilerGenerated (field) || ThreadSafeAttribute.ExsitsOn (field))
+            if (field.IsLiteral || this.IsCompilerGenerated(field) || ThreadSafeAttribute.ExsitsOn(field))
                 return null;
 
             if (!field.IsInitOnly)
-                return new NotThreadSafeMemberInfo (field, ThreadSafetyViolationType.NonReadonlyMember);
+                return new NotThreadSafeMemberInfo(field, ThreadSafetyViolationType.NonReadonlyMember);
 
-            var result = this.CheckMember (field, field.FieldType);
+            var result = this.CheckMember(field, field.FieldType);
 
             return result;
         }
 
 
         [CanBeNull]
-        protected virtual NotThreadSafeMemberInfo CheckProperty (PropertyInfo property)
+        protected virtual NotThreadSafeMemberInfo CheckProperty(PropertyInfo property)
         {
-            if (this.IsCompilerGenerated (property) || ThreadSafeAttribute.ExsitsOn (property))
+            if (this.IsCompilerGenerated(property) || ThreadSafeAttribute.ExsitsOn(property))
                 return null;
 
             if (property.CanWrite)
-                return new NotThreadSafeMemberInfo (property, ThreadSafetyViolationType.NonReadonlyMember);
+                return new NotThreadSafeMemberInfo(property, ThreadSafetyViolationType.NonReadonlyMember);
 
-            var result = this.CheckMember (property, property.PropertyType);
-
-            return result;
-        }
-
-
-        [CanBeNull]
-        protected virtual NotThreadSafeMemberInfo CheckEvent (EventInfo e)
-        {
-            if (this.IsCompilerGenerated (e) || ThreadSafeAttribute.ExsitsOn (e))
-                return null;
-
-            var result = new NotThreadSafeMemberInfo (e, ThreadSafetyViolationType.EventFound);
+            var result = this.CheckMember(property, property.PropertyType);
 
             return result;
         }
 
 
         [CanBeNull]
-        protected virtual NotThreadSafeMemberInfo CheckMember (MemberInfo member, Type memberType)
+        protected virtual NotThreadSafeMemberInfo CheckEvent(EventInfo e)
         {
-            if (this.IsNotMutableType (memberType) || this.HasSingletonRegistration (memberType))
+            if (this.IsCompilerGenerated(e) || ThreadSafeAttribute.ExsitsOn(e))
                 return null;
 
-            if (this.HasNotSingletonRegistration (memberType))
-                return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.NonSingletonRegistration);
+            var result = new NotThreadSafeMemberInfo(e, ThreadSafetyViolationType.EventFound);
 
-            if (memberType == typeof (object))
-                return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.MutableReadonlyMember);
+            return result;
+        }
 
-            var check_result = this.CheckInternal (memberType);
 
-            if (!check_result.NotThreadSafeMembers.IsNullOrEmpty ())
-                return new NotThreadSafeMemberInfo (member, ThreadSafetyViolationType.MutableReadonlyMember);
+        [CanBeNull]
+        protected virtual NotThreadSafeMemberInfo CheckMember(MemberInfo member, Type memberType)
+        {
+            if (this.IsNotMutableType(memberType) || this.HasSingletonRegistration(memberType))
+                return null;
+
+            if (this.HasNotSingletonRegistration(memberType))
+                return new NotThreadSafeMemberInfo(member, ThreadSafetyViolationType.NonSingletonRegistration);
+
+            if (memberType == typeof(object))
+                return new NotThreadSafeMemberInfo(member, ThreadSafetyViolationType.MutableReadonlyMember);
+
+            var check_result = this.CheckInternal(memberType);
+
+            if (!check_result.NotThreadSafeMembers.IsNullOrEmpty())
+                return new NotThreadSafeMemberInfo(member, ThreadSafetyViolationType.MutableReadonlyMember);
 
             if (check_result.NotFullyChecked)
                 return NotThreadSafeMemberInfo.PotentiallySafe;
@@ -218,82 +204,80 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck
         }
 
 
-        protected virtual bool IsNotMutableType (Type type)
+        protected virtual bool IsNotMutableType(Type type)
         {
             if (type.IsValueType)
                 return true;
 
-            if (this.KnownNotMutableTypes.Any (t => t == type ||
-                                               (t.IsGenericTypeDefinition &&
-                                                type.IsGenericType &&
-                                                type.GetGenericTypeDefinition () == t &&
-                                                this.IsNotMutableGenericType (type))))
+            if (this.KnownNotMutableTypes.Any(t => t == type ||
+                                                   (t.IsGenericTypeDefinition &&
+                                                    type.IsGenericType &&
+                                                    type.GetGenericTypeDefinition() == t &&
+                                                    this.IsNotMutableGenericType(type))))
                 return true;
 
             return false;
         }
 
 
-        protected virtual bool IsNotMutableGenericType (Type type)
+        protected virtual bool IsNotMutableGenericType(Type type)
         {
-            return type.GenericTypeArguments.All (this.IsNotMutableType);
+            return type.GenericTypeArguments.All(this.IsNotMutableType);
         }
 
 
-        protected virtual bool IsCompilerGenerated (MemberInfo member)
+        protected virtual bool IsCompilerGenerated(MemberInfo member)
         {
-            return member.GetCustomAttributes (typeof (CompilerGeneratedAttribute), false).Length > 0;
+            return member.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Length > 0;
         }
 
 
-        protected virtual bool HasNotSingletonRegistration (Type type)
+        protected virtual bool HasNotSingletonRegistration(Type type)
         {
-            var result = this.registrations.Any (x => x.ServiceType == type && x.Lifestyle != Lifestyle.Singleton);
+            var result = this.registrations.Any(x => x.ServiceType == type && x.Lifestyle != Lifestyle.Singleton);
 
             return result;
         }
 
 
-        protected virtual bool HasSingletonRegistration (Type type)
+        protected virtual bool HasSingletonRegistration(Type type)
         {
-            var result = this.registrations.Any (x => x.ServiceType == type && x.Lifestyle == Lifestyle.Singleton);
+            var result = this.registrations.Any(x => x.ServiceType == type && x.Lifestyle == Lifestyle.Singleton);
 
             return result;
         }
 
 
-        protected virtual List<FieldInfo> GetAllFields (Type type)
+        protected virtual List<FieldInfo> GetAllFields(Type type)
         {
-            var result = type.GetFields (DefaultBindingFlags).ToList ();
+            var result = type.GetFields(DefaultBindingFlags).ToList();
 
             if (type.BaseType != null)
-                result.AddRange (this.GetAllFields (type.BaseType));
+                result.AddRange(this.GetAllFields(type.BaseType));
 
             return result;
         }
 
 
-        protected virtual List<EventInfo> GetAllEvents (Type type)
+        protected virtual List<EventInfo> GetAllEvents(Type type)
         {
-            var result = type.GetEvents (DefaultBindingFlags).ToList ();
+            var result = type.GetEvents(DefaultBindingFlags).ToList();
 
             if (type.BaseType != null)
-                result.AddRange (this.GetAllEvents (type.BaseType));
+                result.AddRange(this.GetAllEvents(type.BaseType));
 
             return result;
         }
 
 
-        protected virtual List<PropertyInfo> GetAllProperties (Type type)
+        protected virtual List<PropertyInfo> GetAllProperties(Type type)
         {
-            var result = type.GetProperties (DefaultBindingFlags).ToList ();
+            var result = type.GetProperties(DefaultBindingFlags).ToList();
 
             if (type.BaseType != null)
-                result.AddRange (this.GetAllProperties (type.BaseType));
+                result.AddRange(this.GetAllProperties(type.BaseType));
 
             return result;
         }
-
-        #endregion
     }
 }

@@ -33,7 +33,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
 
     public static class ThreadSafetyViolationTypeExtensions
     {
-        public static string GetDescription (this ThreadSafetyViolationType value)
+        public static string GetDescription(this ThreadSafetyViolationType value)
         {
             switch (value)
             {
@@ -50,7 +50,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
                     return "Mutable readonly member";
 
                 default:
-                    throw new NotSupportedException ("value: " + value);
+                    throw new NotSupportedException($"value: {value}");
             }
         }
     }

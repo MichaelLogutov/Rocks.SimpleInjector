@@ -10,8 +10,6 @@ namespace Rocks.SimpleInjector
     [UsedImplicitly]
     public static class AutoRegistrationExtensions
     {
-        #region Static methods
-
         /// <summary>
         ///     Performs search of all non abstract classes that implementing interface having the same name
         ///     as the class prefixed with "I" (for example, TestService class implementing ITestService interface).
@@ -27,33 +25,33 @@ namespace Rocks.SimpleInjector
         /// <param name="interfacePredicate">Predicate to filter out interfaces from the process.</param>
         /// <param name="onlyPublicInterfaces">If true then only public interfaces will be considered.</param>
         [UsedImplicitly]
-        public static void AutoRegisterSelfImplementingTypes ([NotNull] this Container container,
-                                                              [NotNull] Assembly assembly,
-                                                              [NotNull] Lifestyle defaultLifestyle,
-                                                              Func<Type, Lifestyle> customLifestyleSelector = null,
-                                                              Func<Type, bool> instancePredicate = null,
-                                                              Func<Type, bool> interfacePredicate = null,
-                                                              bool onlyPublicInterfaces = true)
+        public static void AutoRegisterSelfImplementingTypes([NotNull] this Container container,
+                                                             [NotNull] Assembly assembly,
+                                                             [NotNull] Lifestyle defaultLifestyle,
+                                                             Func<Type, Lifestyle> customLifestyleSelector = null,
+                                                             Func<Type, bool> instancePredicate = null,
+                                                             Func<Type, bool> interfacePredicate = null,
+                                                             bool onlyPublicInterfaces = true)
         {
-            container.RequiredNotNull ("container");
-            assembly.RequiredNotNull ("assembly");
-            defaultLifestyle.RequiredNotNull ("defaultLifestyle");
+            container.RequiredNotNull("container");
+            assembly.RequiredNotNull("assembly");
+            defaultLifestyle.RequiredNotNull("defaultLifestyle");
 
-            var types = assembly.GetSelfImplementingTypes (instancePredicate: instancePredicate,
-                                                           interfacePredicate: interfacePredicate,
-                                                           onlyPublicInterfaces: onlyPublicInterfaces);
+            var types = assembly.GetSelfImplementingTypes(instancePredicate: instancePredicate,
+                                                          interfacePredicate: interfacePredicate,
+                                                          onlyPublicInterfaces: onlyPublicInterfaces);
 
 
             foreach (var t in types)
             {
-                if (NoAutoRegistrationAttribute.ExsitsOn (t.InstanceType) || NoAutoRegistrationAttribute.ExsitsOn (t.InterfaceType))
+                if (NoAutoRegistrationAttribute.ExsitsOn(t.InstanceType) || NoAutoRegistrationAttribute.ExsitsOn(t.InterfaceType))
                     continue;
 
-                var lifestyle = GetLifestyle (t.InstanceType,
-                                              defaultLifestyle,
-                                              customLifestyleSelector);
+                var lifestyle = GetLifestyle(t.InstanceType,
+                                             defaultLifestyle,
+                                             customLifestyleSelector);
 
-                container.Register (t.InterfaceType, t.InstanceType, lifestyle);
+                container.Register(t.InterfaceType, t.InstanceType, lifestyle);
             }
         }
 
@@ -65,26 +63,24 @@ namespace Rocks.SimpleInjector
         ///     then <see cref="Lifestyle.Singleton" /> is returned.
         ///     Otherwise <paramref name="defaultLifestyle"/> is returned.
         /// </summary>
-        public static Lifestyle GetLifestyle ([NotNull] Type type,
-                                              [NotNull] Lifestyle defaultLifestyle,
-                                              [CanBeNull] Func<Type, Lifestyle> customLifestyleSelector = null)
+        public static Lifestyle GetLifestyle([NotNull] Type type,
+                                             [NotNull] Lifestyle defaultLifestyle,
+                                             [CanBeNull] Func<Type, Lifestyle> customLifestyleSelector = null)
         {
             Lifestyle result;
 
             if (customLifestyleSelector != null)
             {
-                result = customLifestyleSelector (type);
+                result = customLifestyleSelector(type);
                 if (result != null)
                     return result;
             }
 
-            result = SingletonAttribute.ExsitsOn (type)
+            result = SingletonAttribute.ExsitsOn(type)
                          ? Lifestyle.Singleton
                          : defaultLifestyle;
 
             return result;
         }
-
-        #endregion
     }
 }

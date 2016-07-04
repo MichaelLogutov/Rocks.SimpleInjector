@@ -11,7 +11,7 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
         /// <summary>
         ///     Represents a constant value for potentially thread safe objects.
         /// </summary>
-        public static readonly ThreadSafetyCheckResult Safe = new ThreadSafetyCheckResult ();
+        public static readonly ThreadSafetyCheckResult Safe = new ThreadSafetyCheckResult();
 
 
         /// <summary>
@@ -28,9 +28,9 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
         public bool NotFullyChecked { get; set; }
 
 
-        public ThreadSafetyCheckResult ()
+        public ThreadSafetyCheckResult()
         {
-            this.NotThreadSafeMembers = new List<NotThreadSafeMemberInfo> ();
+            this.NotThreadSafeMembers = new List<NotThreadSafeMemberInfo>();
         }
     }
 }

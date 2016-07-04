@@ -31,34 +31,34 @@ namespace Rocks.SimpleInjector.Tests
     public class AutoRegistrationTests
     {
         [Fact]
-        public void ByDefault_RegistersSelfImplementingTypes ()
+        public void ByDefault_RegistersSelfImplementingTypes()
         {
             // arrange
             var container = new Container { Options = { AllowOverridingRegistrations = true } };
 
 
             // act
-            container.AutoRegisterSelfImplementingTypes (Assembly.GetExecutingAssembly (), Lifestyle.Transient);
+            container.AutoRegisterSelfImplementingTypes(Assembly.GetExecutingAssembly(), Lifestyle.Transient);
 
 
             // assert
-            container.GetRegistration (typeof (IServiceA)).Should ().NotBeNull ();
+            container.GetRegistration(typeof(IServiceA)).Should().NotBeNull();
         }
 
 
         [Fact]
-        public void NoAutoRegistrationSelfImplementingClass_DoesNotRegistersIt ()
+        public void NoAutoRegistrationSelfImplementingClass_DoesNotRegistersIt()
         {
             // arrange
             var container = new Container { Options = { AllowOverridingRegistrations = true } };
 
 
             // act
-            container.AutoRegisterSelfImplementingTypes (Assembly.GetExecutingAssembly (), Lifestyle.Transient);
+            container.AutoRegisterSelfImplementingTypes(Assembly.GetExecutingAssembly(), Lifestyle.Transient);
 
 
             // assert
-            container.GetRegistration (typeof (IServiceB)).Should ().BeNull ();
+            container.GetRegistration(typeof(IServiceB)).Should().BeNull();
         }
     }
 }

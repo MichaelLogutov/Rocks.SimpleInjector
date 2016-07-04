@@ -4,59 +4,35 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
 {
     public sealed class NotThreadSafeMemberInfo
     {
-        #region Constants
-
         /// <summary>
         ///     Represents a result of checking the type when all it's members are thread safe but
         ///     there are some that lead to cyclic reference checking.
         /// </summary>
-        public static readonly NotThreadSafeMemberInfo PotentiallySafe = new NotThreadSafeMemberInfo ();
+        public static readonly NotThreadSafeMemberInfo PotentiallySafe = new NotThreadSafeMemberInfo();
 
-        #endregion
 
-        #region Private fields
-
-        private readonly MemberInfo member;
-        private readonly ThreadSafetyViolationType violationType;
-
-        #endregion
-
-        #region Construct
-
-        private NotThreadSafeMemberInfo ()
+        private NotThreadSafeMemberInfo()
         {
         }
 
 
-        public NotThreadSafeMemberInfo (MemberInfo member, ThreadSafetyViolationType violationType)
+        public NotThreadSafeMemberInfo(MemberInfo member, ThreadSafetyViolationType violationType)
         {
-            this.member = member;
-            this.violationType = violationType;
+            this.Member = member;
+            this.ViolationType = violationType;
         }
 
-        #endregion
-
-        #region Public properties
 
         /// <summary>
         ///     A member that is potentially not thread safe.
         /// </summary>
-        public MemberInfo Member
-        {
-            get { return this.member; }
-        }
+        public MemberInfo Member { get; }
 
         /// <summary>
         ///     Member thread safety violation type.
         /// </summary>
-        public ThreadSafetyViolationType ViolationType
-        {
-            get { return this.violationType; }
-        }
+        public ThreadSafetyViolationType ViolationType { get; }
 
-        #endregion
-
-        #region Public methods
 
         /// <summary>
         ///     Returns a string that represents the current object.
@@ -64,11 +40,6 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
         /// <returns>
         ///     A string that represents the current object.
         /// </returns>
-        public override string ToString ()
-        {
-            return this.ViolationType.GetDescription () + ": " + this.Member;
-        }
-
-        #endregion
+        public override string ToString() => $"{this.ViolationType.GetDescription()}: {this.Member}";
     }
 }

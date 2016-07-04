@@ -20,506 +20,506 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
         #region Public methods
 
         [Fact]
-        public void WithTransientField_ReturnsIt ()
+        public void WithTransientField_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithTransientField));
+            var result = sut.Check(typeof(SutWithTransientField));
 
 
             // assert
-            ShouldHaveViolation<FieldInfo> (result, ThreadSafetyViolationType.NonSingletonRegistration);
+            ShouldHaveViolation<FieldInfo>(result, ThreadSafetyViolationType.NonSingletonRegistration);
         }
 
 
         [Fact]
-        public void WithTransientFieldFromBase_ReturnsIt ()
+        public void WithTransientFieldFromBase_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithTransientFieldFromBase));
+            var result = sut.Check(typeof(SutWithTransientFieldFromBase));
 
 
             // assert
-            ShouldHaveViolation<FieldInfo> (result, ThreadSafetyViolationType.NonSingletonRegistration);
+            ShouldHaveViolation<FieldInfo>(result, ThreadSafetyViolationType.NonSingletonRegistration);
         }
 
 
         [Fact]
-        public void WithSingletonField_ReturnsNothing ()
+        public void WithSingletonField_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithSingletonField));
+            var result = sut.Check(typeof(SutWithSingletonField));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithSingletonAndTransientField_ReturnsNothing ()
+        public void WithSingletonAndTransientField_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithSingletonAndTransientField));
+            var result = sut.Check(typeof(SutWithSingletonAndTransientField));
 
 
             // assert
-            ShouldHaveViolation<FieldInfo> (result, ThreadSafetyViolationType.NonSingletonRegistration, "transientService");
+            ShouldHaveViolation<FieldInfo>(result, ThreadSafetyViolationType.NonSingletonRegistration, "transientService");
         }
 
 
         [Fact]
-        public void WithEvent_ReturnsIt ()
+        public void WithEvent_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithEvent));
+            var result = sut.Check(typeof(SutWithEvent));
 
 
             // assert
-            ShouldHaveViolation<EventInfo> (result, ThreadSafetyViolationType.EventFound, "Event");
+            ShouldHaveViolation<EventInfo>(result, ThreadSafetyViolationType.EventFound, "Event");
         }
 
 
         [Fact]
-        public void WithTransientAutoProperty_ReturnsIt ()
+        public void WithTransientAutoProperty_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithTransientProperty));
+            var result = sut.Check(typeof(SutWithTransientProperty));
 
 
             // assert
-            ShouldHaveViolation<PropertyInfo> (result,
-                                               ThreadSafetyViolationType.NonSingletonRegistration,
-                                               "TransientService",
-                                               expectedCount: 1);
+            ShouldHaveViolation<PropertyInfo>(result,
+                                              ThreadSafetyViolationType.NonSingletonRegistration,
+                                              "TransientService",
+                                              expectedCount: 1);
         }
 
 
         [Fact]
-        public void WithNonReadonlyField_ReturnsIt ()
+        public void WithNonReadonlyField_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithNonReadonlyField));
+            var result = sut.Check(typeof(SutWithNonReadonlyField));
 
 
             // assert
-            ShouldHaveViolation<FieldInfo> (result, ThreadSafetyViolationType.NonReadonlyMember);
+            ShouldHaveViolation<FieldInfo>(result, ThreadSafetyViolationType.NonReadonlyMember);
         }
 
 
         [Fact]
-        public void WithReadonlyMutableField_ReturnsIt ()
+        public void WithReadonlyMutableField_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithReadonlyMutableField));
+            var result = sut.Check(typeof(SutWithReadonlyMutableField));
 
 
             // assert
-            ShouldHaveViolation<FieldInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember);
+            ShouldHaveViolation<FieldInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember);
         }
 
 
         [Fact]
-        public void WithReadonlyValueTypeField_ReturnsNothing ()
+        public void WithReadonlyValueTypeField_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithReadonlyValueTypeField));
+            var result = sut.Check(typeof(SutWithReadonlyValueTypeField));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithPropertyWithSet_ReturnsNothing ()
+        public void WithPropertyWithSet_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithPropertyWithSet));
+            var result = sut.Check(typeof(SutWithPropertyWithSet));
 
 
             // assert
-            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.NonReadonlyMember, "String");
+            ShouldHaveViolation<PropertyInfo>(result, ThreadSafetyViolationType.NonReadonlyMember, "String");
         }
 
 
         [Fact]
-        public void WithValueTypePropertyWithoutSet_ReturnsNothing ()
+        public void WithValueTypePropertyWithoutSet_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithValueTypePropertyWithoutSet));
+            var result = sut.Check(typeof(SutWithValueTypePropertyWithoutSet));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithMutablePropertyWithoutSet_ReturnsIt ()
+        public void WithMutablePropertyWithoutSet_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithMutablePropertyWithoutSet));
+            var result = sut.Check(typeof(SutWithMutablePropertyWithoutSet));
 
 
             // assert
-            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "Object");
+            ShouldHaveViolation<PropertyInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember, "Object");
         }
 
 
         [Fact]
-        public void WithNotMutableReferenceReadonlyFields_ReturnsNothing ()
+        public void WithNotMutableReferenceReadonlyFields_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithNotMutableReferenceReadonlyFields));
+            var result = sut.Check(typeof(SutWithNotMutableReferenceReadonlyFields));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithMutableMembersWithThreadSafeAttribute_ReturnsNothing ()
+        public void WithMutableMembersWithThreadSafeAttribute_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithMutableMembersWithThreadSafeAttribute));
+            var result = sut.Check(typeof(SutWithMutableMembersWithThreadSafeAttribute));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithThreadSafeReadonlyReferenceMembers_ReturnsNothing ()
+        public void WithThreadSafeReadonlyReferenceMembers_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithThreadSafeReadonlyReferenceMembers));
+            var result = sut.Check(typeof(SutWithThreadSafeReadonlyReferenceMembers));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithSelfReferenceReadonlyMembers_ReturnsNothing ()
+        public void WithSelfReferenceReadonlyMembers_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithSelfReferenceReadonlyMembers));
+            var result = sut.Check(typeof(SutWithSelfReferenceReadonlyMembers));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithCyclicReferenceReadonlyMembers_ReturnsNothing ()
+        public void WithCyclicReferenceReadonlyMembers_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithCyclicReferenceReadonlyMembers));
+            var result = sut.Check(typeof(SutWithCyclicReferenceReadonlyMembers));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithCyclicReferenceAndNotThreadSafeMembers_ReturnsThem ()
+        public void WithCyclicReferenceAndNotThreadSafeMembers_ReturnsThem()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithCyclicReferenceAndNotThreadSafeMembers));
+            var result = sut.Check(typeof(SutWithCyclicReferenceAndNotThreadSafeMembers));
 
 
             // assert
-            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
+            ShouldHaveViolation<PropertyInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
         }
 
 
         [Fact]
-        public void LinqDataContext_ReturnsViolations ()
+        public void LinqDataContext_ReturnsViolations()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (DataContext));
+            var result = sut.Check(typeof(DataContext));
 
 
             // assert
-            ShouldHaveViolations (result);
+            ShouldHaveViolations(result);
         }
 
 
         [Fact]
-        public void WithBaseClassWithLinqDataContextProperty_ReturnsIt ()
+        public void WithBaseClassWithLinqDataContextProperty_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithBaseClassWithLinqDataContextProperty));
+            var result = sut.Check(typeof(SutWithBaseClassWithLinqDataContextProperty));
 
 
             // assert
-            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "DataContext");
+            ShouldHaveViolation<PropertyInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember, "DataContext");
         }
 
 
         [Fact]
-        public void WithStaticReadonlyMutableField_ReturnsIt ()
+        public void WithStaticReadonlyMutableField_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithStaticReadonlyMutableField));
+            var result = sut.Check(typeof(SutWithStaticReadonlyMutableField));
 
 
             // assert
-            ShouldHaveViolation<FieldInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
+            ShouldHaveViolation<FieldInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
         }
 
 
         [Fact]
-        public void WithStaticReadonlyMutableProperty_ReturnsIt ()
+        public void WithStaticReadonlyMutableProperty_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithStaticReadonlyMutableProperty));
+            var result = sut.Check(typeof(SutWithStaticReadonlyMutableProperty));
 
 
             // assert
-            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
+            ShouldHaveViolation<PropertyInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember, "List");
         }
 
 
         [Fact]
-        public void WithCompilerGeneratedCachedAnonymousMethodDelegate_ReturnsNothing ()
+        public void WithCompilerGeneratedCachedAnonymousMethodDelegate_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithCompilerGeneratedCachedAnonymousMethodDelegate));
+            var result = sut.Check(typeof(SutWithCompilerGeneratedCachedAnonymousMethodDelegate));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithWithConstantField_ReturnsNothing ()
+        public void WithWithConstantField_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithConstantField));
+            var result = sut.Check(typeof(SutWithConstantField));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithBaseGenericThreadSafeClass_ReturnsNothing ()
+        public void WithBaseGenericThreadSafeClass_ReturnsNothing()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithBaseGenericThreadSafeClass));
+            var result = sut.Check(typeof(SutWithBaseGenericThreadSafeClass));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
 
         [Fact]
-        public void WithBaseGenericClassAndMutableReadonlyProperty_ReturnsIt ()
+        public void WithBaseGenericClassAndMutableReadonlyProperty_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithBaseGenericClassAndMutableReadonlyProperty));
+            var result = sut.Check(typeof(SutWithBaseGenericClassAndMutableReadonlyProperty));
 
 
             // assert
-            ShouldHaveViolation<PropertyInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember, "Property");
+            ShouldHaveViolation<PropertyInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember, "Property");
         }
 
 
         [Fact]
-        public void WithKnownNotMutableGenericTypeButWithMutableArgument_ReturnsIt ()
+        public void WithKnownNotMutableGenericTypeButWithMutableArgument_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithKnownNotMutableGenericTypeButWithMutableArgument));
+            var result = sut.Check(typeof(SutWithKnownNotMutableGenericTypeButWithMutableArgument));
 
 
             // assert
-            ShouldHaveViolation<MemberInfo> (result, ThreadSafetyViolationType.MutableReadonlyMember);
+            ShouldHaveViolation<MemberInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember);
         }
 
 
         [Fact]
-        public void WithKnownNotMutableGenericTypesAndComplexThreadSafeArguments_ReturnsIt ()
+        public void WithKnownNotMutableGenericTypesAndComplexThreadSafeArguments_ReturnsIt()
         {
             // arrange
-            var sut = CreateSut ();
+            var sut = CreateSut();
 
 
             // act
-            var result = sut.Check (typeof (SutWithKnownNotMutableGenericTypesAndComplexThreadSafeArguments));
+            var result = sut.Check(typeof(SutWithKnownNotMutableGenericTypesAndComplexThreadSafeArguments));
 
 
             // assert
-            ShouldHaveNoViolations (result);
+            ShouldHaveNoViolations(result);
         }
 
         #endregion
 
         #region Private methods
 
-        private static ThreadSafetyChecker CreateSut ()
+        private static ThreadSafetyChecker CreateSut()
         {
-            var container = new Container ();
+            var container = new Container();
 
-            container.Register<TransientService> (Lifestyle.Transient);
-            container.RegisterSingleton<SingletonService> ();
+            container.Register<TransientService>(Lifestyle.Transient);
+            container.RegisterSingleton<SingletonService>();
 
-            var sut = new ThreadSafetyChecker (container);
+            var sut = new ThreadSafetyChecker(container);
 
             return sut;
         }
 
 
-        private static void ShouldHaveNoViolations (IReadOnlyList<NotThreadSafeMemberInfo> result)
+        private static void ShouldHaveNoViolations(IReadOnlyList<NotThreadSafeMemberInfo> result)
         {
-            result.Should ().BeEmpty (because: FormatBecause (result));
+            result.Should().BeEmpty(because: FormatBecause(result));
         }
 
 
-        private static void ShouldHaveViolations (IReadOnlyList<NotThreadSafeMemberInfo> result)
+        private static void ShouldHaveViolations(IReadOnlyList<NotThreadSafeMemberInfo> result)
         {
-            result.Should ().NotBeEmpty (because: FormatBecause (result));
+            result.Should().NotBeEmpty(because: FormatBecause(result));
         }
 
 
-        private static void ShouldHaveViolation<TMember> (IReadOnlyList<NotThreadSafeMemberInfo> result,
-                                                          ThreadSafetyViolationType violationType,
-                                                          string memberName = "member",
-                                                          int? expectedCount = null)
+        private static void ShouldHaveViolation<TMember>(IReadOnlyList<NotThreadSafeMemberInfo> result,
+                                                         ThreadSafetyViolationType violationType,
+                                                         string memberName = "member",
+                                                         int? expectedCount = null)
         {
-            result.Should ().NotBeNullOrEmpty ();
+            result.Should().NotBeNullOrEmpty();
 
             if (expectedCount != null)
-                result.Should ().HaveCount (expectedCount.Value, because: FormatBecause (result));
+                result.Should().HaveCount(expectedCount.Value, because: FormatBecause(result));
 
-            result.Should ().Contain (x => x.ViolationType == violationType &&
-                                           x.Member.GetType ().IsSameOrInherits (typeof (TMember)) &&
-                                           x.Member.Name == memberName);
+            result.Should().Contain(x => x.ViolationType == violationType &&
+                                         x.Member.GetType().IsSameOrInherits(typeof(TMember)) &&
+                                         x.Member.Name == memberName);
         }
 
 
-        private static string FormatBecause (IEnumerable<NotThreadSafeMemberInfo> result)
+        private static string FormatBecause(IEnumerable<NotThreadSafeMemberInfo> result)
         {
             return "because: " + Environment.NewLine +
                    Environment.NewLine +
-                   string.Join (Environment.NewLine,
-                                result.Select (x => "• " + x)) +
+                   string.Join(Environment.NewLine,
+                               result.Select(x => "• " + x)) +
                    Environment.NewLine + Environment.NewLine;
         }
 

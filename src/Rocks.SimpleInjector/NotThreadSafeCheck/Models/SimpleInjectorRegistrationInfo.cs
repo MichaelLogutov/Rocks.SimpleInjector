@@ -41,9 +41,6 @@ namespace Rocks.SimpleInjector.NotThreadSafeCheck.Models
         /// <summary>
         ///     True if <see cref="NotThreadSafeMembers" /> is not null and contains items.
         /// </summary>
-        public bool HasNotThreadSafeMembers
-        {
-            get { return !this.NotThreadSafeMembers.IsNullOrEmpty (); }
-        }
+        public bool HasNotThreadSafeMembers => !this.NotThreadSafeMembers.IsNullOrEmpty();
     }
 }
