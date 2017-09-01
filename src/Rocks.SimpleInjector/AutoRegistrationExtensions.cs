@@ -26,30 +26,31 @@ namespace Rocks.SimpleInjector
         /// <param name="onlyPublicInterfaces">If true then only public interfaces will be considered.</param>
         [UsedImplicitly]
         public static void AutoRegisterSelfImplementingTypes([NotNull] this Container container,
-                                                             [NotNull] Assembly assembly,
-                                                             [NotNull] Lifestyle defaultLifestyle,
-                                                             Func<Type, Lifestyle> customLifestyleSelector = null,
-                                                             Func<Type, bool> instancePredicate = null,
-                                                             Func<Type, bool> interfacePredicate = null,
-                                                             bool onlyPublicInterfaces = true)
+            [NotNull] Assembly assembly,
+            [NotNull] Lifestyle defaultLifestyle,
+            Func<Type, Lifestyle> customLifestyleSelector = null,
+            Func<Type, bool> instancePredicate = null,
+            Func<Type, bool> interfacePredicate = null,
+            bool onlyPublicInterfaces = true)
         {
             container.RequiredNotNull("container");
             assembly.RequiredNotNull("assembly");
             defaultLifestyle.RequiredNotNull("defaultLifestyle");
 
             var types = assembly.GetSelfImplementingTypes(instancePredicate: instancePredicate,
-                                                          interfacePredicate: interfacePredicate,
-                                                          onlyPublicInterfaces: onlyPublicInterfaces);
+                interfacePredicate: interfacePredicate,
+                onlyPublicInterfaces: onlyPublicInterfaces);
 
 
             foreach (var t in types)
             {
-                if (NoAutoRegistrationAttribute.ExsitsOn(t.InstanceType) || NoAutoRegistrationAttribute.ExsitsOn(t.InterfaceType))
+                if (NoAutoRegistrationAttribute.ExsitsOn(t.InstanceType) ||
+                    NoAutoRegistrationAttribute.ExsitsOn(t.InterfaceType))
                     continue;
 
                 var lifestyle = GetLifestyle(t.InstanceType,
-                                             defaultLifestyle,
-                                             customLifestyleSelector);
+                    defaultLifestyle,
+                    customLifestyleSelector);
 
                 container.Register(t.InterfaceType, t.InstanceType, lifestyle);
             }
@@ -64,8 +65,8 @@ namespace Rocks.SimpleInjector
         ///     Otherwise <paramref name="defaultLifestyle"/> is returned.
         /// </summary>
         public static Lifestyle GetLifestyle([NotNull] Type type,
-                                             [NotNull] Lifestyle defaultLifestyle,
-                                             [CanBeNull] Func<Type, Lifestyle> customLifestyleSelector = null)
+            [NotNull] Lifestyle defaultLifestyle,
+            [CanBeNull] Func<Type, Lifestyle> customLifestyleSelector = null)
         {
             Lifestyle result;
 
@@ -77,8 +78,8 @@ namespace Rocks.SimpleInjector
             }
 
             result = SingletonAttribute.ExsitsOn(type)
-                         ? Lifestyle.Singleton
-                         : defaultLifestyle;
+                ? Lifestyle.Singleton
+                : defaultLifestyle;
 
             return result;
         }
