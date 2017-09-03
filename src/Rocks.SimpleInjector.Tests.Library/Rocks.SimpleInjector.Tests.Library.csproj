@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <!-- Properties -->
     <PropertyGroup>
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user</DefaultItemExcludes>
         <TargetFrameworks>net46;net461;net462;net47;netstandard2.0;</TargetFrameworks>
     </PropertyGroup>
     <!-- Properties for NuGet package -->
@@ -24,8 +25,6 @@
     </ItemGroup>
     <!-- NuGet packages for .NET Core App 2.0 -->
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="NETStandard.Library" Version="2.0.0"/>
-        <PackageReference Include="Microsoft.NETCore.Platforms" Version="2.0.0"/>
         <PackageReference Include="System.Linq" Version="4.3.0"/>
     </ItemGroup>
     <!-- References -->
@@ -50,6 +49,5 @@
     </ItemGroup>
     <!-- Projects -->
     <ItemGroup>
-        <ProjectReference Include="..\Rocks.SimpleInjector\Rocks.SimpleInjector.csproj"/>
     </ItemGroup>
 </Project>
