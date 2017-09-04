@@ -1,162 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{095C370D-FE5D-42AA-9F34-FA4CBC2D0620}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rocks.SimpleInjector.Tests</RootNamespace>
-    <AssemblyName>Rocks.SimpleInjector.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="FluentAssertions, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleInjector, Version=4.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInjector.4.0.0\lib\net45\SimpleInjector.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Data.Linq" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.2.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.execution.dotnet, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.2.0\lib\netstandard1.1\xunit.execution.dotnet.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <Choose>
-    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-      </ItemGroup>
-    </When>
-    <Otherwise />
-  </Choose>
-  <ItemGroup>
-    <Compile Include="AutoRegistrationTests.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\BaseGenericThreadSafeClass.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithBaseGenericClassAndMutableReadonlyProperty.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithBaseGenericThreadSafeClass.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithConstantField.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithKnownNotMutableGenericTypeButWithMutableArgument - Copy.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithKnownNotMutableGenericTypeButWithMutableArgument.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithStaticReadonlyMutableProperty.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithStaticReadonlyMutableField.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithCompilerGeneratedCachedAnonymousMethodDelegate.cs" />
-    <Compile Include="NotThreadSafeCheck\ThreadSafetyCheckerTests.cs" />
-    <Compile Include="NotThreadSafeCheck\Services\NotRegisteredService.cs" />
-    <Compile Include="NotThreadSafeCheck\Services\SingletonService.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithCyclicReferenceAndNotThreadSafeMembers.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithCyclicReferenceAndNotThreadSafeMembers2.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithCyclicReferenceReadonlyMembers.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithCyclicReferenceReadonlyMembers2.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithEvent.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithMutablePropertyWithoutSet.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithNonReadonlyField.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithNotMutableReferenceReadonlyFields.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithNotRegisteredField.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithPropertyWithSet.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithMutableMembersWithThreadSafeAttribute.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithReadonlyMutableField.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithReadonlyValueTypeField.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithSelfReferenceReadonlyMembers.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithSingletonAndTransientField.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithSingletonField.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithThreadSafeReadonlyReferenceMembers.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithTransientField.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithTransientFieldFromBase.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithTransientProperty.cs" />
-    <Compile Include="NotThreadSafeCheck\Suts\SutWithValueTypePropertyWithoutSet.cs" />
-    <Compile Include="NotThreadSafeCheck\Services\ThreadSafeService.cs" />
-    <Compile Include="NotThreadSafeCheck\Services\TransientService.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Rocks.SimpleInjector.Tests.Library\Rocks.SimpleInjector.Tests.Library.csproj">
-      <Project>{78EB73F3-8188-4059-81F2-B3CAA0CB0669}</Project>
-      <Name>Rocks.SimpleInjector.Tests.Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rocks.SimpleInjector\Rocks.SimpleInjector.csproj">
-      <Project>{1E3EB73A-5314-4104-A678-39E601501AE3}</Project>
-      <Name>Rocks.SimpleInjector</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!-- Properties -->
+    <PropertyGroup>
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user</DefaultItemExcludes>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+    </PropertyGroup>
+    <!-- Properties for NuGet package -->
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    <!-- NuGet packages -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0"/>
+        <PackageReference Include="xunit" Version="2.2.0"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0"/>
+        <PackageReference Include="AutoFixture" Version="3.50.6"/>
+        <PackageReference Include="FluentAssertions" Version="4.19.4"/>
+    </ItemGroup>
+    <!-- References -->
+    <ItemGroup>
+    </ItemGroup>
+    <!-- Projects -->
+    <ItemGroup>
+        <ProjectReference Include="..\Rocks.SimpleInjector\Rocks.SimpleInjector.csproj"/>
+        <ProjectReference Include="..\Rocks.SimpleInjector.Tests.Library\Rocks.SimpleInjector.Tests.Library.csproj"/>
+    </ItemGroup>
 </Project>
