@@ -1,53 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <!-- Properties -->
-    <PropertyGroup>
-        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user</DefaultItemExcludes>
-        <TargetFrameworks>net46;net461;net462;net47;netstandard2.0</TargetFrameworks>
-    </PropertyGroup>
-    <!-- Properties for NuGet package -->
-    <PropertyGroup>
-        <IsPackable>false</IsPackable>
-    </PropertyGroup>
-    <!-- NuGet packages -->
-    <ItemGroup>
-    </ItemGroup>
-    <!-- NuGet packages for .NET 4.6 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
-    </ItemGroup>
-    <!-- NuGet packages for .NET 4.6.1 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    </ItemGroup>
-    <!-- NuGet packages for .NET 4.6.2 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-    </ItemGroup>
-    <!-- NuGet packages for .NET 4.7 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net47'">
-    </ItemGroup>
-    <!-- NuGet packages for .NET Core App 2.0 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="System.Linq" Version="4.3.0"/>
-    </ItemGroup>
-    <!-- References -->
-    <!-- References for .NET 4.6 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
-        <Reference Include="System.Data.Linq"/>
-    </ItemGroup>
-    <!-- References for .NET 4.6.1 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-        <Reference Include="System.Data.Linq"/>
-    </ItemGroup>
-    <!-- References for .NET 4.6.2 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-        <Reference Include="System.Data.Linq"/>
-    </ItemGroup>
-    <!-- References for .NET 4.7 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net47'">
-        <Reference Include="System.Data.Linq"/>
-    </ItemGroup>
-    <!-- References for .NET Standard 2.0 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    </ItemGroup>
-    <!-- Projects -->
-    <ItemGroup>
-    </ItemGroup>
+  <!-- Properties -->
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user</DefaultItemExcludes>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <!-- Properties for NuGet package -->
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <!-- NuGet packages -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />
+  </ItemGroup>
+  <!-- References -->
+  <ItemGroup>
+  </ItemGroup>
+  <!-- Projects -->
+  <ItemGroup>
+  </ItemGroup>
 </Project>

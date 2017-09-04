@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using FluentAssertions;
 using FluentAssertions.Common;
 using System.Linq;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Rocks.SimpleInjector.NotThreadSafeCheck;
 using Rocks.SimpleInjector.NotThreadSafeCheck.Models;
 using Rocks.SimpleInjector.Tests.Library;
@@ -311,14 +311,14 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
         [Fact]
-        public void LinqDataContext_ReturnsViolations()
+        public void EntityFrameworkDbContext_ReturnsViolations()
         {
             // arrange
             var sut = CreateSut();
 
 
             // act
-            var result = sut.Check(typeof(DataContext));
+            var result = sut.Check(typeof(DbContext));
 
 
             // assert
@@ -327,18 +327,18 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 
 
         [Fact]
-        public void WithBaseClassWithLinqDataContextProperty_ReturnsIt()
+        public void WithBaseClassWithLinqDbContextProperty_ReturnsIt()
         {
             // arrange
             var sut = CreateSut();
 
 
             // act
-            var result = sut.Check(typeof(SutWithBaseClassWithLinqDataContextProperty));
+            var result = sut.Check(typeof(SutWithBaseClassWithLinqDbContextProperty));
 
 
             // assert
-            ShouldHaveViolation<PropertyInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember, "DataContext");
+            ShouldHaveViolation<PropertyInfo>(result, ThreadSafetyViolationType.MutableReadonlyMember, "DbContext");
         }
 
 
