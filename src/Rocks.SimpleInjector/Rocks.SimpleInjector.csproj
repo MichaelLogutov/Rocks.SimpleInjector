@@ -1,59 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!-- Properties -->
-  <PropertyGroup>
-    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user
+    <!-- Properties -->
+    <PropertyGroup>
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user
         </DefaultItemExcludes>
-    <TargetFrameworks>net461;net471;netstandard2.0</TargetFrameworks>
-    <Version>4.2.0</Version>
-    <FileVersion>$(Version)</FileVersion>
-    <AssemblyVersion>$(Version)</AssemblyVersion>
-    <Authors>Michael Logutov</Authors>
-    <Company>Michael Logutov</Company>
-    <Description>A collection of helper extensions.</Description>
-    <Copyright>Copyright © Michael Logutov 2017</Copyright>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Rocks.SimpleInjector.xml</DocumentationFile>
-  </PropertyGroup>
-  <!-- Properties for NuGet package -->
-  <PropertyGroup>
-    <IsPackable>true</IsPackable>
-    <PackageId>Rocks.SimpleInjector</PackageId>
-    <PackageVersion>$(Version)</PackageVersion>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector/blob/master/LICENSE
+        <TargetFrameworks>net461;net471;netstandard2.0</TargetFrameworks>
+        <Version>4.2.1</Version>
+        <FileVersion>$(Version)</FileVersion>
+        <AssemblyVersion>$(Version)</AssemblyVersion>
+        <Authors>Michael Logutov</Authors>
+        <Company>Michael Logutov</Company>
+        <Description>A collection of helper extensions.</Description>
+        <Copyright>Copyright © Michael Logutov 2017</Copyright>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Rocks.SimpleInjector.xml</DocumentationFile>
+        <NoWarn>1591</NoWarn>
+    </PropertyGroup>
+    <!-- Properties for NuGet package -->
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <PackageId>Rocks.SimpleInjector</PackageId>
+        <PackageVersion>$(Version)</PackageVersion>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageProjectUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector/blob/master/LICENSE
         </PackageLicenseUrl>
-  </PropertyGroup>
-  <!-- NuGet packages -->
-  <ItemGroup>
-    <PackageReference Include="FastMember" Version="1.1.0" />
-    <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
-    <PackageReference Include="Rocks.Helpers" Version="2.2.0" />
-    <PackageReference Include="SimpleInjector" Version="4.0.12" />
-  </ItemGroup>
-  <!-- NuGet packages for .NET Framework -->
-  <ItemGroup Condition="$(TargetFramework) == 'net461'">
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net471'">
-  </ItemGroup>
-  <!-- NuGet packages for .NET Core -->
-  <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.0"/>
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0"/>
-    <PackageReference Include="System.Data.Common" Version="4.3.0"/>
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0"/>
-    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.Routing.Abstractions" Version="2.0.0"/>
-  </ItemGroup>
-  <!-- References for .NET Framework -->
-  <ItemGroup Condition="$(TargetFramework) == 'net461'">
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net471'">
-  </ItemGroup>
-  <!-- Documentation -->
-  <Target Name="IncludeDocumentationFiles" BeforeTargets="PrepareForPublish">
+    </PropertyGroup>
+    <!-- NuGet packages -->
     <ItemGroup>
-      <DocumentationFiles Include="bin\$(Configuration)\$(TargetFramework)\*.xml" />
+        <PackageReference Include="FastMember" Version="1.1.0"/>
+        <PackageReference Include="JetBrains.Annotations" Version="11.0.0"/>
+        <PackageReference Include="Rocks.Helpers" Version="2.2.0"/>
+        <PackageReference Include="SimpleInjector" Version="4.0.12"/>
     </ItemGroup>
-    <Copy SourceFiles="@(DocumentationFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false" />
-  </Target>
+    <!-- NuGet packages for .NET Framework -->
+    <ItemGroup Condition="$(TargetFramework) == 'net461'">
+    </ItemGroup>
+    <ItemGroup Condition="$(TargetFramework) == 'net471'">
+    </ItemGroup>
+    <!-- NuGet packages for .NET Core -->
+    <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
+    </ItemGroup>
+    <!-- References for .NET Framework -->
+    <ItemGroup Condition="$(TargetFramework) == 'net461'">
+    </ItemGroup>
+    <ItemGroup Condition="$(TargetFramework) == 'net471'">
+    </ItemGroup>
+    <!-- Documentation -->
+    <Target Name="IncludeDocumentationFiles" BeforeTargets="PrepareForPublish">
+        <ItemGroup>
+            <DocumentationFiles Include="bin\$(Configuration)\$(TargetFramework)\*.xml"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(DocumentationFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false"/>
+    </Target>
 </Project>
