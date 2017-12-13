@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <!-- Properties -->
     <PropertyGroup>
-        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user;**\*.nupkg
         </DefaultItemExcludes>
         <TargetFrameworks>net461;net471;netstandard2.0</TargetFrameworks>
     </PropertyGroup>
@@ -11,12 +11,16 @@
     </PropertyGroup>
     <!-- NuGet packages -->
     <ItemGroup>
+    </ItemGroup>
+    <!-- NuGet packages for .NET Framework -->
+    <ItemGroup Condition="$(TargetFramework) == 'net461'">
+        <PackageReference Include="EntityFramework" Version="6.2.0"/>
+    </ItemGroup>
+    <ItemGroup Condition="$(TargetFramework) == 'net471'">
+        <PackageReference Include="EntityFramework" Version="6.2.0"/>
+    </ItemGroup>
+    <!-- NuGet packages for .NET Core -->
+    <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0"/>
-    </ItemGroup>
-    <!-- References -->
-    <ItemGroup>
-    </ItemGroup>
-    <!-- Projects -->
-    <ItemGroup>
     </ItemGroup>
 </Project>
