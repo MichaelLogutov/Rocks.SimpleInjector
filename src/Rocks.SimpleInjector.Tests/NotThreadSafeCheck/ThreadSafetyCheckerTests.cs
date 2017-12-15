@@ -4,7 +4,6 @@ using FluentAssertions;
 using FluentAssertions.Common;
 using System.Linq;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore;
 using Rocks.SimpleInjector.NotThreadSafeCheck;
 using Rocks.SimpleInjector.NotThreadSafeCheck.Models;
 using Rocks.SimpleInjector.Tests.Library;
@@ -12,6 +11,13 @@ using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Services;
 using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Suts;
 using SimpleInjector;
 using Xunit;
+
+#if NET461 || NET471
+    using System.Data.Entity;
+#endif
+#if NETCOREAPP2_0
+    using Microsoft.EntityFrameworkCore;
+#endif
 
 namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 {
