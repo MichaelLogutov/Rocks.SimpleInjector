@@ -1,4 +1,4 @@
-﻿#if NET461 || NET471
+﻿#if NET471
     using System.Data.Entity;
 #endif
 #if NETSTANDARD2_0

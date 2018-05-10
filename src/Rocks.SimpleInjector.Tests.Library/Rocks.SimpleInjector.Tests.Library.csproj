@@ -3,7 +3,7 @@
   <PropertyGroup>
     <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user;**\*.nupkg
         </DefaultItemExcludes>
-    <TargetFrameworks>net461;net471;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <!-- Properties for NuGet package -->
   <PropertyGroup>
@@ -11,12 +11,9 @@
   </PropertyGroup>
   <!-- NuGet packages -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
   </ItemGroup>
   <!-- NuGet packages for .NET Framework -->
-  <ItemGroup Condition="$(TargetFramework) == 'net461'">
-    <PackageReference Include="EntityFramework" Version="6.2.0" />
-  </ItemGroup>
   <ItemGroup Condition="$(TargetFramework) == 'net471'">
     <PackageReference Include="EntityFramework" Version="6.2.0" />
   </ItemGroup>

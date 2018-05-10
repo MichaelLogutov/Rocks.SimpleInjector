@@ -12,7 +12,7 @@ using Rocks.SimpleInjector.Tests.NotThreadSafeCheck.Suts;
 using SimpleInjector;
 using Xunit;
 
-#if NET461 || NET471
+#if NET471
     using System.Data.Entity;
 #endif
 #if NETCOREAPP2_0
