@@ -1,21 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- Properties -->
-  <PropertyGroup>
-    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user;**\*.nupkg
-        </DefaultItemExcludes>
-    <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
-  </PropertyGroup>
-  <!-- Properties for NuGet package -->
-  <PropertyGroup>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
-  <!-- NuGet packages -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
-  </ItemGroup>
-  <!-- NuGet packages for .NET Framework -->
-  <ItemGroup Condition="$(TargetFramework) == 'net471'">
-    <PackageReference Include="EntityFramework" Version="6.2.0" />
-  </ItemGroup>
-  <!-- NuGet packages for .NET Core -->
+    <PropertyGroup>
+        <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
+    </PropertyGroup>
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0"/>
+    </ItemGroup>
+    <ItemGroup Condition="$(TargetFramework) == 'net471'">
+        <PackageReference Include="EntityFramework" Version="6.2.0"/>
+    </ItemGroup>
 </Project>

@@ -1,31 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!-- Properties -->
-  <PropertyGroup>
-    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user;**\*.nupkg
-        </DefaultItemExcludes>
-    <TargetFrameworks>net471;netcoreapp2.0</TargetFrameworks>
-  </PropertyGroup>
-  <!-- Properties for NuGet package -->
-  <PropertyGroup>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
-  <!-- NuGet packages -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-    <PackageReference Include="AutoFixture" Version="4.3.0" />
-    <PackageReference Include="FluentAssertions" Version="5.3.0" />
-  </ItemGroup>
-  <!-- NuGet packages for .NET Framework -->
-  <ItemGroup Condition="$(TargetFramework) == 'net471'">
-  </ItemGroup>
-  <!-- NuGet packages for .NET Core -->
-  <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
-  </ItemGroup>
-  <!-- Projects -->
-  <ItemGroup>
-    <ProjectReference Include="..\Rocks.SimpleInjector\Rocks.SimpleInjector.csproj" />
-    <ProjectReference Include="..\Rocks.SimpleInjector.Tests.Library\Rocks.SimpleInjector.Tests.Library.csproj" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net471;netcoreapp2.0</TargetFrameworks>
+    </PropertyGroup>
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2"/>
+        <PackageReference Include="xunit" Version="2.3.1"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1"/>
+        <PackageReference Include="AutoFixture" Version="4.4.0"/>
+        <PackageReference Include="FluentAssertions" Version="5.3.2"/>
+    </ItemGroup>
+    <ItemGroup Condition="$(TargetFramework) == 'net471'">
+    </ItemGroup>
+    <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Rocks.SimpleInjector\Rocks.SimpleInjector.csproj"/>
+        <ProjectReference Include="..\Rocks.SimpleInjector.Tests.Library\Rocks.SimpleInjector.Tests.Library.csproj"/>
+    </ItemGroup>
 </Project>
