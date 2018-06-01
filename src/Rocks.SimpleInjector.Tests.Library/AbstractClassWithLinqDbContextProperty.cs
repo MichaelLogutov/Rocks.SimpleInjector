@@ -1,7 +1,6 @@
 ﻿#if NET471
     using System.Data.Entity;
-#endif
-#if NETSTANDARD2_0
+#else
     using Microsoft.EntityFrameworkCore;
 #endif
 

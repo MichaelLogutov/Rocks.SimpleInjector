@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
-        <Version>4.6.0</Version>
+        <Version>4.7.0</Version>
         <FileVersion>$(Version)</FileVersion>
         <AssemblyVersion>$(Version)</AssemblyVersion>
         <Authors>Michael Logutov</Authors>
@@ -20,7 +20,10 @@
         <PackageLicenseUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector/blob/master/LICENSE
         </PackageLicenseUrl>
         <RepositoryUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector</RepositoryUrl>
-        <PackageReleaseNotes>4.6.0 (2018-05-31)
+        <PackageReleaseNotes>4.7.0 (2018-06-01)
+            Packages update
+            
+            4.6.0 (2018-05-31)
             Packages update
 
             4.5.0 (2018-05-10)
@@ -31,7 +34,7 @@
         </PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Rocks.Helpers" Version="3.0.0"/>
+        <PackageReference Include="Rocks.Helpers" Version="4.0.0"/>
         <PackageReference Include="SimpleInjector" Version="4.3.0"/>
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework) == 'net471'">

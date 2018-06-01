@@ -14,8 +14,7 @@ using Xunit;
 
 #if NET471
     using System.Data.Entity;
-#endif
-#if NETCOREAPP2_0
+#else
     using Microsoft.EntityFrameworkCore;
 #endif
 
@@ -23,8 +22,6 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
 {
     public class ThreadSafetyCheckerTests
     {
-        #region Public methods
-
         [Fact]
         public void WithTransientField_ReturnsIt()
         {
@@ -475,9 +472,6 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
             ShouldHaveNoViolations(result);
         }
 
-        #endregion
-
-        #region Private methods
 
         private static ThreadSafetyChecker CreateSut()
         {
@@ -528,7 +522,5 @@ namespace Rocks.SimpleInjector.Tests.NotThreadSafeCheck
                                result.Select(x => "• " + x)) +
                    Environment.NewLine + Environment.NewLine;
         }
-
-        #endregion
     }
 }
