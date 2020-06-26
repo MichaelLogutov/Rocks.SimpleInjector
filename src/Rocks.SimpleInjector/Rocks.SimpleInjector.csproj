@@ -10,16 +10,10 @@
         <Copyright>Copyright © Michael Logutov 2018</Copyright>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Rocks.SimpleInjector.xml</DocumentationFile>
         <NoWarn>1591</NoWarn>
-    
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
     <PropertyGroup>
         <IsPackable>true</IsPackable>
         <PackageId>Rocks.SimpleInjector</PackageId>
@@ -31,7 +25,7 @@
         <RepositoryUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector</RepositoryUrl>
         <PackageReleaseNotes>4.7.0 (2018-06-01)
             Packages update
-            
+
             4.6.0 (2018-05-31)
             Packages update
 
@@ -45,6 +39,7 @@
     <ItemGroup>
         <PackageReference Include="Rocks.Helpers" Version="4.0.0"/>
         <PackageReference Include="SimpleInjector" Version="4.3.0"/>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework) == 'net471'">
     </ItemGroup>
