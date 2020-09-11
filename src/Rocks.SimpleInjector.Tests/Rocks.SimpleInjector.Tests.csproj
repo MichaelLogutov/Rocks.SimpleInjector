@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net471;netcoreapp2.1</TargetFrameworks>
+        <TargetFrameworks>net471;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
     <PropertyGroup>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2"/>
-        <PackageReference Include="xunit" Version="2.3.1"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1"/>
-        <PackageReference Include="AutoFixture" Version="4.4.0"/>
-        <PackageReference Include="FluentAssertions" Version="5.3.2"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+        <PackageReference Include="AutoFixture" Version="4.14.0" />
+        <PackageReference Include="FluentAssertions" Version="5.10.3" />
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework) == 'net471'">
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework) == 'netstandard2.1'">
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Rocks.SimpleInjector\Rocks.SimpleInjector.csproj"/>
-        <ProjectReference Include="..\Rocks.SimpleInjector.Tests.Library\Rocks.SimpleInjector.Tests.Library.csproj"/>
+        <ProjectReference Include="..\Rocks.SimpleInjector\Rocks.SimpleInjector.csproj" />
+        <ProjectReference Include="..\Rocks.SimpleInjector.Tests.Library\Rocks.SimpleInjector.Tests.Library.csproj" />
     </ItemGroup>
 </Project>

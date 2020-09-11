@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.SimpleInjector", "Roc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.SimpleInjector.Tests", "Rocks.SimpleInjector.Tests\Rocks.SimpleInjector.Tests.csproj", "{095C370D-FE5D-42AA-9F34-FA4CBC2D0620}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DB19986A-0918-4FDC-8033-DEFC5CCAC527}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.SimpleInjector.Tests.Library", "Rocks.SimpleInjector.Tests.Library\Rocks.SimpleInjector.Tests.Library.csproj", "{78EB73F3-8188-4059-81F2-B3CAA0CB0669}"
 EndProject
 Global
@@ -34,6 +32,5 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{78EB73F3-8188-4059-81F2-B3CAA0CB0669} = {DB19986A-0918-4FDC-8033-DEFC5CCAC527}
 	EndGlobalSection
 EndGlobal

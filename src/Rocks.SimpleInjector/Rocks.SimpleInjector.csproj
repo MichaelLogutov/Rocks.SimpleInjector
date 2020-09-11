@@ -1,13 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
-        <Version>4.7.0</Version>
+
+        <Version>4.8.0</Version>
         <FileVersion>$(Version)</FileVersion>
         <AssemblyVersion>$(Version)</AssemblyVersion>
+
+        <!--        <Version>4.8.0-rc2</Version>-->
+        <!--        <AssemblyVersion>4.8.0.2</AssemblyVersion>-->
+        <!--        <FileVersion>4.8.0.2</FileVersion>-->
+
         <Authors>Michael Logutov</Authors>
         <Company>Michael Logutov</Company>
-        <Description>A collection of helper extensions.</Description>
-        <Copyright>Copyright © Michael Logutov 2018</Copyright>
+        <Description>A collection of helper extensions for SimpleInjector.</Description>
+        <Copyright>Copyright © Michael Logutov 2020</Copyright>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Rocks.SimpleInjector.xml</DocumentationFile>
         <NoWarn>1591</NoWarn>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -16,29 +22,16 @@
     </PropertyGroup>
     <PropertyGroup>
         <IsPackable>true</IsPackable>
-        <PackageId>Rocks.SimpleInjector</PackageId>
+        <PackageId>$(AssemblyName)</PackageId>
         <PackageVersion>$(Version)</PackageVersion>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageProjectUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector/blob/master/LICENSE
-        </PackageLicenseUrl>
+        <PackageLicenseUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/MichaelLogutov/Rocks.SimpleInjector</RepositoryUrl>
-        <PackageReleaseNotes>4.7.0 (2018-06-01)
-            Packages update
-
-            4.6.0 (2018-05-31)
-            Packages update
-
-            4.5.0 (2018-05-10)
-            Removed .NET 4.6.1
-
-            4.4.0 (2018-04-27)
-            Update packages
-        </PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Rocks.Helpers" Version="4.0.0"/>
-        <PackageReference Include="SimpleInjector" Version="4.3.0"/>
+        <PackageReference Include="Rocks.Helpers" Version="4.7.0"/>
+        <PackageReference Include="SimpleInjector" Version="5.0.3"/>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework) == 'net471'">
